@@ -1,0 +1,11 @@
+{
+  "extends": "hyperoslo/react",
+  "rules": {
+    "react/prop-types": false,
+    "react/destructuring-assignment": false,
+    "arrow-parens": [
+      2,
+      "as-needed"
+    ]
+  }
+}
