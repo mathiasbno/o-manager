@@ -45,16 +45,16 @@ In the Processing file you'll find functions to import races, including event da
 
 Before we have a working Alpha we need to get in place the following:
 
-[] Simple frontend using React
-[] Calculation of runner cost
-[] Calculation of result pr race
+- [ ] Simple frontend using React
+- [ ] Calculation of runner cost
+- [ ] Calculation of result pr race
 
 ### Roadmap
 
-[] Enable deployment to server (maybe Docker)
-[] Add worker to fetch info regularly
-[] Add possibility to administrate series and events
-[] Add elaborate frontend to manage teams for different series and events
+- [ ] Enable deployment to server (maybe Docker)
+- [ ] Add worker to fetch info regularly
+- [ ] Add possibility to administrate series and events
+- [ ] Add elaborate frontend to manage teams for different series and events
 
 ## Want to contribute?
 
