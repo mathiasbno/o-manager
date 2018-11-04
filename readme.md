@@ -7,11 +7,12 @@ The gole is to create a manager using data from Eventor (NO, SE and IOF).
 
 We use the folowing libraries to run this project:
 
-- Yarn
-- Node
-- MongoDB
-- Mongoose
-- Express
+- [Yarn](https://yarnpkg.com/lang/en/)
+- [Node](https://nodejs.org/en/)
+- [MongoDB](https://www.mongodb.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [Express](https://expressjs.com/)
+- [Direnv](https://direnv.net/)
 
 For now you can only run this localy and we need to start two processes
 to get this to work. Run the server using express and then we can run
@@ -20,6 +21,12 @@ the processing script.
 You need to do some initial setup on your machine and install MongoDB, to do this you can follow this tutorial: [https://docs.mongodb.com/manual/installation/](https://docs.mongodb.com/manual/installation/)
 
 For Mac users I recomend using homebrew.
+
+To get the data from Eventor you must provide a API key. This you can get by logging in to eventor and go to mange account. The API key is bound to your team/organization so you have to be an admin to access this.
+
+Make suder you have [direnv](https://direnv.net/) installed. To load them into you app you should copy and rename the `.envrc-sample` to `.envrc`, there you can provide API keys for all the different Eventors.
+
+---
 
 To install the app start by running:
 
@@ -55,6 +62,7 @@ Before we have a working Alpha we need to get in place the following:
 - [ ] Add worker to fetch info regularly
 - [ ] Add possibility to administrate series and events
 - [ ] Add elaborate frontend to manage teams for different series and events
+- [ ] Add working implementation for multiday events
 
 ## Want to contribute?
 
