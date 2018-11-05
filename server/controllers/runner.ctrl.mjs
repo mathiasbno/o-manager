@@ -1,7 +1,11 @@
+import mongoose from "mongoose";
+
 import { RunnerModel } from "../models/Runner.mjs";
 import { NationModel } from "../models/Nation.mjs";
 import { TeamModel } from "../models/Team.mjs";
 import { EventModel } from "../models/Event.mjs";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -21,43 +25,80 @@ export default {
     const connectTeamsAndEventsAndNation = [];
 
     object.results.forEach(result => {
-      connectTeamsAndEventsAndNation.push(
-        new Promise((resolve, reject) =>
-          TeamModel.find({
-            id: result.team
-          }).exec((err, team) => {
-            result.team = team[0]._id;
-            if (err) reject(err);
-            else resolve(team[0]._id);
-          })
-        )
-      );
+      if (!result.team._id) {
+        connectTeamsAndEventsAndNation.push(
+          new Promise((resolve, reject) =>
+            TeamModel.find({
+              id: result.team
+            }).exec((err, team) => {
+              result.team = team[0]._id;
+              if (err) reject(err);
+              else resolve(team[0]._id);
+            })
+          )
+        );
+      }
 
-      connectTeamsAndEventsAndNation.push(
-        new Promise((resolve, reject) =>
-          EventModel.find({
-            id: result.event
-          }).exec((err, event) => {
-            result.event = event[0]._id;
-            if (err) reject(event, err);
-            else resolve(event[0]._id);
-          })
-        )
-      );
+      if (!result.event._id) {
+        connectTeamsAndEventsAndNation.push(
+          new Promise((resolve, reject) =>
+            EventModel.find({
+              id: result.event
+            }).exec((err, event) => {
+              result.event = event[0]._id;
+              if (err) reject(event, err);
+              else resolve(event[0]._id);
+            })
+          )
+        );
+      }
+    });
+
+    object.price.forEach(price => {
+      console.log(price.event.toString());
+      if (!price.event._id) {
+        connectTeamsAndEventsAndNation.push(
+          new Promise((resolve, reject) =>
+            EventModel.find({
+              _id: price.event.toString()
+            }).exec((err, event) => {
+              price.event = event[0]._id;
+              if (err) reject(err);
+              else resolve(event[0]._id);
+            })
+          )
+        );
+      }
+
+      if (!price.priceBasedOn._id) {
+        connectTeamsAndEventsAndNation.push(
+          new Promise((resolve, reject) =>
+            EventModel.find({
+              _id: price.priceBasedOn.toString()
+            }).exec((err, event) => {
+              price.priceBasedOn = event[0]._id;
+              if (err) reject(event, err);
+              else resolve(event[0]._id);
+            })
+          )
+        );
+      }
     });
 
     // Return all the connected elements
-    connectTeamsAndEventsAndNation.push(
-      new Promise((resolve, reject) =>
-        NationModel.find({
-          id: object.nationality
-        }).exec((err, nation) => {
-          object.nationality = nation[0]._id;
-          if (err) reject(err);
-          else resolve(nation[0]._id);
-        })
-      )
-    );
+    if (!object.nationality._id) {
+      connectTeamsAndEventsAndNation.push(
+        new Promise((resolve, reject) =>
+          NationModel.find({
+            id: object.nationality
+          }).exec((err, nation) => {
+            object.nationality = nation[0]._id;
+            if (err) reject(err);
+            else resolve(nation[0]._id);
+          })
+        )
+      );
+    }
 
     // Wait untill alle the connections are done
     Promise.all(connectTeamsAndEventsAndNation).then(() => {
