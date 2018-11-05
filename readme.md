@@ -14,6 +14,9 @@ We use the folowing libraries to run this project:
 - [Express](https://expressjs.com/)
 - [Direnv](https://direnv.net/)
 
+Bodus:
+- [mongoui](https://github.com/azat-co/mongoui)
+
 For now you can only run this localy and we need to start two processes
 to get this to work. Run the server using express and then we can run
 the processing script.
