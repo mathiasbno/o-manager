@@ -29,8 +29,9 @@ const RunnerSchema = new Schema({
   price: [
     {
       event: { type: mongoose.Types.ObjectId, ref: "Event" },
+      priceBasedOn: { type: mongoose.Types.ObjectId, ref: "Event" },
       cost: Number,
-      type: String
+      eventForm: String
     }
   ]
 });

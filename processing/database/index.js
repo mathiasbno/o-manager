@@ -8,6 +8,14 @@ const saveData = function(url, data) {
   });
 };
 
+const getData = function(url, data) {
+  return new Promise(resolve => {
+    get(url, data).then(response => {
+      resolve(response.json());
+    });
+  });
+};
+
 function saveConnectedData(event, nations, teams) {
   const saveEvent = saveData(`${process.env.API_URL}/event`, event)
     .then(data => {
@@ -41,4 +49,5 @@ function saveConnectedData(event, nations, teams) {
 }
 
 module.exports.saveData = saveData;
+module.exports.getData = getData;
 module.exports.saveConnectedData = saveConnectedData;

@@ -1,8 +1,8 @@
-function getPriceRangeForType(type, position) {
+function getPriceRangeForType(eventForm, position) {
   let price = 0;
 
   switch (true) {
-    case type === "RelaySingleDay":
+    case eventForm === "RelaySingleDay":
       switch (true) {
         case position < 1:
           price = 500;
@@ -31,12 +31,15 @@ function getPriceRangeForType(type, position) {
   return price;
 }
 
-function calculatePrice(result, priceForEventId, customType) {
-  const position = result.legPosition ? result.legPosition : result.Position;
-  const type = customType ? customType : result.event.eventForm;
-  const cost = getPriceRangeForType(type, position);
+function calculatePrice(position, priceForEventId, eventId, EventForm) {
+  const cost = getPriceRangeForType(EventForm, position);
 
-  return { event: priceForEventId, cost: cost, type: type };
+  return {
+    event: priceForEventId,
+    priceBasedOn: eventId,
+    cost: cost,
+    eventForm: EventForm
+  };
 }
 
 function calculatPoints(position, teamPosition, behind, status) {
