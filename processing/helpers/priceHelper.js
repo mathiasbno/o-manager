@@ -1,3 +1,5 @@
+const { getData } = require("../database/index.js");
+
 function pointsFormula(x, maxScore) {
   const A = maxScore;
   const B = 7;
@@ -59,6 +61,26 @@ function calculatePrice(position, priceForEventId, eventId, EventForm) {
   };
 }
 
+function calculatPoints(position, status, teamPosition) {
+  if (status === "DidNotStart" || "MisPunch") {
+    return 0;
+  }
+
+  let points = 0;
+
+  points = getPointForPosition(position);
+
+  // TODO: Add team bonus
+  // if (teamPosition) {
+  //   const teamMaxPoints = 1000;
+  //   const teamBonusPoints = getPointForPosition(teamPosition, teamMaxPoints);
+
+  //   points = points + teamBonusPoints;
+  // }
+
+  return points;
+}
+
 function setPriceForRunners(priceForEvent, customEventForm) {
   getData(`${process.env.API_URL}/runners`)
     .then(runners => {
@@ -95,29 +117,24 @@ function setPriceForRunners(priceForEvent, customEventForm) {
     });
 }
 
-function calculatPoints(position, status, teamPosition) {
-  let points = 0;
+function setPointForRunners(pointForEvent) {
+  getData(`${process.env.API_URL}/runners`).then(runners => {
+    runners.forEach(function(runner) {
+      const result = runner.results.find(function(_result) {
+        return _result.event._id === pointForEvent;
+      });
 
-  points = getPointForPosition(position);
-
-  if (status === "DidNotStart") {
-    return 0;
-  }
-
-  if (status === "MisPunch") {
-    return points * 0.2;
-  }
-
-  // TODO: Add team bonus
-  // if (teamPosition) {
-  //   const teamMaxPoints = 1000;
-  //   const teamBonusPoints = getPointForPosition(teamPosition, teamMaxPoints);
-
-  //   points = points + teamBonusPoints;
-  // }
-
-  return points;
+      // TODO: Save calculcated points
+      console.log(
+        result.legPosition,
+        result.status,
+        calculatPoints(result.legPosition, result.status)
+      );
+    });
+  });
 }
 
 module.exports.calculatePrice = calculatePrice;
 module.exports.calculatPoints = calculatPoints;
+module.exports.setPriceForRunners = setPriceForRunners;
+module.exports.setPointForRunners = setPointForRunners;

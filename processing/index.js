@@ -2,7 +2,10 @@ const EventorApi = require("./eventor-api/index.js");
 const { saveData, getData, saveConnectedData } = require("./database/index.js");
 const { processRelayEvent, processEvent } = require("./helpers/eventHelper.js");
 const { asyncForEach } = require("./helpers/helper.js");
-const { setPriceForRunners } = require("./helpers/priceHelper.js");
+const {
+  setPriceForRunners,
+  setPointForRunners
+} = require("./helpers/priceHelper.js");
 
 const EventorNO = new EventorApi({
   apiKey: process.env.EVENTOR_NO_APIKEY,
@@ -82,6 +85,7 @@ function processAndSaveEvent(eventor, eventId, dryrun = false) {
 // this will not be a problem when deploying
 setTimeout(function() {
   // setPriceForRunners("5bdf7a5b23c05f9a3e895f4a");
+  setPointForRunners("5bde01ddb408a6febb7866f3");
 }, 1000);
 // processAndSaveRelayEvent(EventorSE, 20090, true);
 // processAndSaveEvent(EventorNO, 8070, true);
