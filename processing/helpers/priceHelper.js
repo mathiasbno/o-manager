@@ -42,6 +42,42 @@ function calculatePrice(position, priceForEventId, eventId, EventForm) {
   };
 }
 
+function setPriceForRunners(priceForEvent, customEventForm) {
+  getData(`${process.env.API_URL}/runners`)
+    .then(runners => {
+      asyncForEach(runners, async function(runner) {
+        const position = runner.results[0].legPosition;
+        const event = runner.results[0].event;
+        const newPrice = calculatePrice(
+          position,
+          priceForEvent,
+          event._id,
+          event.eventForm || customEventForm
+        );
+
+        // Make sure that the price calculation does not already excist for this event
+        const found = runner.price.findIndex(function(element) {
+          return element.event === newPrice.event;
+        });
+
+        if (found < 0) {
+          runner.price.push(newPrice);
+
+          await saveData(`${process.env.API_URL}/runner`, runner)
+            .then(data => {
+              console.log(data);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 function calculatPoints(position, teamPosition, behind, status) {
   const minimumPoints = 2000;
 

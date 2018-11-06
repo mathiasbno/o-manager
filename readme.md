@@ -23,7 +23,7 @@ the processing script.
 
 You need to do some initial setup on your machine and install MongoDB, to do this you can follow this tutorial: [https://docs.mongodb.com/manual/installation/](https://docs.mongodb.com/manual/installation/)
 
-For Mac users I recomend using homebrew.
+For Mac users I recomend using `homebrew`.
 
 To get the data from Eventor you must provide a API key. This you can get by logging in to eventor and go to mange account. The API key is bound to your team/organization so you have to be an admin to access this.
 
@@ -56,7 +56,7 @@ In the Processing file you'll find functions to import races, including event da
 Before we have a working Alpha we need to get in place the following:
 
 - [ ] Simple frontend using React
-- [ ] Calculation of runner cost
+- [x] Calculation of runner cost
 - [ ] Calculation of result pr race
 
 ### Roadmap

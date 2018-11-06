@@ -2,7 +2,7 @@ const EventorApi = require("./eventor-api/index.js");
 const { saveData, getData, saveConnectedData } = require("./database/index.js");
 const { processRelayEvent, processEvent } = require("./helpers/eventHelper.js");
 const { asyncForEach } = require("./helpers/helper.js");
-const { calculatePrice } = require("./helpers/priceHelper.js");
+const { setPriceForRunners } = require("./helpers/priceHelper.js");
 
 const EventorNO = new EventorApi({
   apiKey: process.env.EVENTOR_NO_APIKEY,
@@ -81,33 +81,7 @@ function processAndSaveEvent(eventor, eventId, dryrun = false) {
 // We need to wait for the server to restart due to nodemon,
 // this will not be a problem when deploying
 setTimeout(function() {
-  getData(`${process.env.API_URL}/runner/5bdf653bc3f70081fd5b341a`)
-    .then(data => {
-      const position = data.results[0].legPosition;
-      const event = data.results[0].event;
-      const newPrice = calculatePrice(
-        position,
-        "5bdf7a5b23c05f9a3e895f4a",
-        event._id,
-        event.eventForm
-      );
-
-      data.price.push(newPrice);
-
-      console.log(data);
-
-      saveData(`${process.env.API_URL}/runner`, data)
-        .then(data => {
-          console.log(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}, 400);
-
-// processAndSaveRelayEvent(EventorSE, 17220, true);
+  // setPriceForRunners("5bdf7a5b23c05f9a3e895f4a");
+}, 1000);
+// processAndSaveRelayEvent(EventorSE, 20090, true);
 // processAndSaveEvent(EventorNO, 8070, true);
