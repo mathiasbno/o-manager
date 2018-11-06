@@ -1,3 +1,20 @@
+function pointsFormula(x, maxScore) {
+  const A = maxScore;
+  const B = 7;
+  const C = 0.075;
+  const e = Math.E;
+  const _x = x - 1;
+
+  // Math Compatible formula
+  // f(x) = 10000 - Aℯ ^ (-Bℯ ^ (-Cx))
+
+  return Math.ceil(A * e ** (-B * e ** (-C * _x)));
+}
+
+function getPointForPosition(x, maxScore = 10000) {
+  return maxScore + pointsFormula(1, maxScore) - pointsFormula(x, maxScore);
+}
+
 function getPriceRangeForType(eventForm, position) {
   let price = 0;
 
@@ -78,23 +95,26 @@ function setPriceForRunners(priceForEvent, customEventForm) {
     });
 }
 
-function calculatPoints(position, teamPosition, behind, status) {
-  const minimumPoints = 2000;
+function calculatPoints(position, status, teamPosition) {
+  let points = 0;
+
+  points = getPointForPosition(position);
 
   if (status === "DidNotStart") {
     return 0;
   }
 
   if (status === "MisPunch") {
-    return minimumPoints * 0.2;
+    return points * 0.2;
   }
 
-  let teamBonusPoints = 1000;
-  let points = 10000;
+  // TODO: Add team bonus
+  // if (teamPosition) {
+  //   const teamMaxPoints = 1000;
+  //   const teamBonusPoints = getPointForPosition(teamPosition, teamMaxPoints);
 
-  points = points + teamBonusPoints;
-
-  // console.log(points, position, teamPosition, behind, status);
+  //   points = points + teamBonusPoints;
+  // }
 
   return points;
 }
