@@ -1,4 +1,5 @@
 const { getData } = require("../database/index.js");
+const { findResultById } = require("./helper.js");
 
 function pointsFormula(x, maxScore) {
   const A = maxScore;
@@ -85,8 +86,9 @@ function setPriceForRunners(priceForEvent, customEventForm) {
   getData(`${process.env.API_URL}/runners`)
     .then(runners => {
       asyncForEach(runners, async function(runner) {
-        const position = runner.results[0].legPosition;
-        const event = runner.results[0].event;
+        const result = findResultById(runner.results, priceForEvent);
+        const position = result.legPosition;
+        const event = result.event;
         const newPrice = calculatePrice(
           position,
           priceForEvent,
@@ -120,9 +122,7 @@ function setPriceForRunners(priceForEvent, customEventForm) {
 function setPointForRunners(pointForEvent) {
   getData(`${process.env.API_URL}/runners`).then(runners => {
     runners.forEach(function(runner) {
-      const result = runner.results.find(function(_result) {
-        return _result.event._id === pointForEvent;
-      });
+      const result = findResultById(runner.results, pointForEvent);
 
       // TODO: Save calculcated points
       console.log(

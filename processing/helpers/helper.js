@@ -16,6 +16,13 @@ async function asyncForEach(array, callback) {
   }
 }
 
+function findResultById(results, id) {
+  return results.find(function(_result) {
+    return _result.event._id === id;
+  });
+}
+
 module.exports.itemInArray = itemInArray;
 module.exports.ensureArray = ensureArray;
 module.exports.asyncForEach = asyncForEach;
+module.exports.findResultById = findResultById;
