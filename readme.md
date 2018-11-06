@@ -67,14 +67,14 @@ Open `processing/index.js` and add the folowing lines. Make sure that the env va
 
 ```
 const EventorApi = require("./eventor-api/index.js");
-const { processEvent } = require("./helpers/eventHelper.js");
+const { processAndSaveEvent} = require("./actions/save.js");
 
 const EventorNO = new EventorApi({
   apiKey: process.env.EVENTOR_NO_APIKEY,
   url: "https://eventor.orientering.no/api/"
 });
 
-processEvent(EventorNO, 8998, true);
+processAndSaveEvent(EventorNO, 8998, true);
 ```
 
 Note that the last parameter indicates that this should run as a dryrun at first, not storing anything but logging the result in the terminal.
