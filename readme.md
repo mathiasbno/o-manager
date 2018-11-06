@@ -1,11 +1,11 @@
 # O-manager
 
-This is a WIP O-manger implementation and a proof of consept.
-The gole is to create a manager using data from Eventor (NO, SE and IOF).
+This is a WIP O-manger implementation and a proof of concept.
+The goal is to create a manager using data from Eventor (NO, SE and IOF).
 
 ## Setup and structure
 
-We use the folowing libraries to run this project:
+We use the following libraries to run this project:
 
 - [Yarn](https://yarnpkg.com/lang/en/)
 - [Node](https://nodejs.org/en/)
@@ -14,20 +14,20 @@ We use the folowing libraries to run this project:
 - [Express](https://expressjs.com/)
 - [Direnv](https://direnv.net/)
 
-Bodus:
+Bonus:
 - [mongoui](https://github.com/azat-co/mongoui)
 
-For now you can only run this localy and we need to start two processes
+For now you can only run this locally and we need to start two processes
 to get this to work. Run the server using express and then we can run
 the processing script.
 
 You need to do some initial setup on your machine and install MongoDB, to do this you can follow this tutorial: [https://docs.mongodb.com/manual/installation/](https://docs.mongodb.com/manual/installation/)
 
-For Mac users I recomend using `homebrew`.
+For Mac users I recommend using `homebrew`.
 
-To get the data from Eventor you must provide a API key. This you can get by logging in to eventor and go to mange account. The API key is bound to your team/organization so you have to be an admin to access this.
+To get the data from Eventor you must provide a API key. This you can get by logging in to Eventor and go to mange account. The API key is bound to your team/organization so you have to be an admin to access this.
 
-Make suder you have [direnv](https://direnv.net/) installed. To load them into you app you should copy and rename the `.envrc-sample` to `.envrc`, there you can provide API keys for all the different Eventors.
+Make sure you have [direnv](https://direnv.net/) installed. To load them into you app you should copy and rename the `.envrc-sample` to `.envrc`, there you can provide API keys for all the different Eventors.
 
 ---
 
@@ -53,17 +53,17 @@ In the Processing file you'll find functions to import races, including event da
 
 ## Import event data
 
-Now that you have your project up and running we can import some data. The scripts will import and save event data, all clubs, nations and runners in a given race. If a any of the abowe already excists in the database the script will skip them.
+Now that you have your project up and running we can import some data. The scripts will import and save event data, all clubs, nations and runners in a given race. If a any of the above already exists in the database the script will skip them.
 
-This is determined by the Eventor ID that is stored on each element. This id is not percisted across eventor instances, so if a runner has a user in both Norwegian and Swedish Eventor you'll end up with a "duplicate". Note that they are actually two seperate instancess and connected to races in their respective Eventor instances.
+This is determined by the Eventor ID that is stored on each element. This id is not persisted across Eventor instances, so if a runner has a user in both Norwegian and Swedish Eventor you'll end up with a "duplicate". Note that they are actually two separate instances and connected to races in their respective Eventor instances.
 
 ### First import
 
-In theori the scripts can import any race from any Eventor, but in this example we'll import a small race from the Norwegian Eventor.
+In theory the scripts can import any race from any Eventor, but in this example we'll import a small race from the Norwegian Eventor.
 
 Make sure that you are running the processing task using `yarn start` in the terminal.
 
-Open `processing/index.js` and add the folowing lines. Make sure that the env variable is set and initialized using `direnv allow`.
+Open `processing/index.js` and add the following lines. Make sure that the env variable is set and initialized using `direnv allow`.
 
 ```
 const EventorApi = require("./eventor-api/index.js");
@@ -101,4 +101,4 @@ Before we have a working Alpha we need to get in place the following:
 
 ## Want to contribute?
 
-If you want to add functionality, codereview, have ideas or othervise want to contribute to this project; feel free to open a [Pull request](https://github.com/mathiasbno/numberclicker/pulls) or [add an issue](https://github.com/mathiasbno/numberclicker/issues) on Github.
+If you want to add functionality, code review, have ideas or otherwise want to contribute to this project; feel free to open a [Pull request](https://github.com/mathiasbno/numberclicker/pulls) or [add an issue](https://github.com/mathiasbno/numberclicker/issues) on Github.
