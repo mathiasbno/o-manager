@@ -1,4 +1,4 @@
-# O-manger
+# O-manager
 
 This is a WIP O-manger implementation and a proof of consept.
 The gole is to create a manager using data from Eventor (NO, SE and IOF).
