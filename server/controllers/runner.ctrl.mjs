@@ -116,7 +116,7 @@ export default {
       });
     });
   },
-  deleteRunner: (req, res, next) => {
+  deleteRunners: (req, res, next) => {
     RunnerModel.remove({}, function(err) {
       if (err) return handleError(err);
       next();
