@@ -17,12 +17,24 @@ async function asyncForEach(array, callback) {
 }
 
 function findResultById(results, id) {
-  return results.find(function(_result) {
-    return _result.event._id === id;
+  return results.find(function(result) {
+    return result.event._id === id;
   });
+}
+
+function filterRunnersByEventId(runners, eventId) {
+  return runners.filter(function(runner) {
+    return findResultById(runner.results, eventId);
+  });
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 module.exports.itemInArray = itemInArray;
 module.exports.ensureArray = ensureArray;
 module.exports.asyncForEach = asyncForEach;
+module.exports.filterRunnersByEventId = filterRunnersByEventId;
 module.exports.findResultById = findResultById;
+module.exports.getRandomInt = getRandomInt;
