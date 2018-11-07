@@ -1,4 +1,5 @@
 const { get, post } = require("./helpers.js");
+const { asyncForEach } = require("../helpers/helper.js");
 
 const saveData = function(url, data) {
   return new Promise(resolve => {
