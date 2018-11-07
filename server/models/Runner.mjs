@@ -23,6 +23,10 @@ const RunnerSchema = new Schema({
       overallResult: {
         position: Number,
         status: String
+      },
+      points: {
+        totalPoints: Number,
+        bonusPoints: Number
       }
     }
   ],

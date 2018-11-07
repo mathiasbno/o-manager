@@ -83,13 +83,29 @@ When you are ready to save, make sure that the server is running, open a new ter
 
 Using `mongoui` you can now see the data in your database.
 
+Now that we have the runners we need to calculate a price for an upcomming event. We'll import this as well using the same import statement we did abowe.
+
+```
+processAndSaveEvent(EventorNO, 1234, true);
+```
+
+This event is probably long in the feature, but now we at least have an event object that we can connect and calculate prices on.
+
+First we need to run:
+
+```
+setPriceForRunners(1234, 8998)
+```
+
+This will calculate the prices for the event `1234` based on the runners performance at `8998`. You can make indivudual price tables, just pass the name of the table as a third argument, or just use the pre excisting one. This will check the event type of the event that we are calculating prices for.
+
 ## Todos and roadmaps
 
 Before we have a working Alpha we need to get in place the following:
 
 - [ ] Simple frontend using React
 - [x] Calculation of runner cost
-- [ ] Calculation of result pr race
+- [x] Calculation of result pr race
 
 ### Roadmap
 

@@ -1,5 +1,9 @@
-const { getData } = require("../database/index.js");
-const { findResultById } = require("./helper.js");
+const { getData, saveData } = require("../database/index.js");
+const {
+  findResultById,
+  asyncForEach,
+  filterRunnersByEventId
+} = require("./helper.js");
 
 function pointsFormula(x, maxScore) {
   const A = maxScore;
@@ -63,30 +67,28 @@ function calculatePrice(position, priceForEventId, eventId, EventForm) {
 }
 
 function calculatPoints(position, status, teamPosition) {
-  if (status === "DidNotStart" || "MisPunch") {
-    return 0;
+  let runnerPoints = 0;
+  let teamBonusPoints = 0;
+  runnerPoints = getPointForPosition(position);
+
+  // TODO: Might have to rework this, testing needed
+  if (teamPosition) {
+    const teamMaxPoints = 1000;
+    teamBonusPoints = getPointForPosition(teamPosition, teamMaxPoints);
   }
 
-  let points = 0;
+  if (status === "DidNotStart" || status === "MisPunch") {
+    runnerPoints = 0;
+  }
 
-  points = getPointForPosition(position);
-
-  // TODO: Add team bonus
-  // if (teamPosition) {
-  //   const teamMaxPoints = 1000;
-  //   const teamBonusPoints = getPointForPosition(teamPosition, teamMaxPoints);
-
-  //   points = points + teamBonusPoints;
-  // }
-
-  return points;
+  return { totalPoints: runnerPoints, bonusPoints: teamBonusPoints };
 }
 
-function setPriceForRunners(priceForEvent, customEventForm) {
+function setPriceForRunners(priceForEvent, basedOnEvent, customEventForm) {
   getData(`${process.env.API_URL}/runners`)
     .then(runners => {
       asyncForEach(runners, async function(runner) {
-        const result = findResultById(runner.results, priceForEvent);
+        const result = findResultById(runner.results, basedOnEvent);
         const position = result.legPosition;
         const event = result.event;
         const newPrice = calculatePrice(
@@ -119,22 +121,50 @@ function setPriceForRunners(priceForEvent, customEventForm) {
     });
 }
 
-function setPointForRunners(pointForEvent) {
+function setPointForRunners(pointsForEvent) {
   getData(`${process.env.API_URL}/runners`).then(runners => {
-    runners.forEach(function(runner) {
-      const result = findResultById(runner.results, pointForEvent);
+    _runners = filterRunnersByEventId(runners, pointsForEvent);
+    asyncForEach(_runners, async function(runner) {
+      const result = findResultById(runner.results, pointsForEvent);
 
-      // TODO: Save calculcated points
-      console.log(
+      const points = calculatPoints(
         result.legPosition,
         result.status,
-        calculatPoints(result.legPosition, result.status)
+        result.overallResult.position
       );
+
+      result.points = points;
+
+      await saveData(`${process.env.API_URL}/runner`, runner)
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     });
   });
+}
+
+function getPointsForRunner(runner, pointsForEvent) {
+  const result = findResultById(runner.results, pointsForEvent);
+
+  return result.points.totalPoints;
+}
+
+function getPointsForTeam(team, pointsForEvent) {
+  let teamPoints = 0;
+
+  team.forEach(function(runner) {
+    teamPoints = teamPoints + getPointsForRunner(runner, pointsForEvent);
+  });
+
+  return teamPoints;
 }
 
 module.exports.calculatePrice = calculatePrice;
 module.exports.calculatPoints = calculatPoints;
 module.exports.setPriceForRunners = setPriceForRunners;
 module.exports.setPointForRunners = setPointForRunners;
+module.exports.getPointsForRunner = getPointsForRunner;
+module.exports.getPointsForTeam = getPointsForTeam;
