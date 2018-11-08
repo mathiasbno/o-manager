@@ -18,4 +18,17 @@ function nationObject(nationality) {
   return nation;
 }
 
+function unknownNation() {
+  return {
+    short: "Unknown",
+    id: 0,
+    name: [
+      { name: "Unknown", lang: "en" },
+      { name: "Ukjent", lang: "no" },
+      { name: "Okänt", lang: "se" }
+    ]
+  };
+}
+
 module.exports.nationObject = nationObject;
+module.exports.unknownNation = unknownNation;

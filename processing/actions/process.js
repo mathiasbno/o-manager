@@ -10,8 +10,8 @@ const { itemInArray, ensureArray } = require("../helpers/helper.js");
 function processEvent(data) {
   const event = eventObject(data.Event);
 
-  const nations = [];
-  const teams = [];
+  const nations = [unknownNation()];
+  const teams = [unknownTeam()];
   const runners = [];
 
   if (data.ClassResult) {
