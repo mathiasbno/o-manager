@@ -15,11 +15,11 @@ async function asyncForEach(array, callback) {
 
 export default {
   saveRunner: (req, res, next) => {
-    const query = { eventorId: req.body.eventorId };
+    const query = { id: req.body.id };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
     const object = req.body;
 
-    console.log("Starting", object.eventorId);
+    console.log("Starting", object.id);
 
     // Connect teams and events
     const connectTeamsAndEventsAndNation = [];
@@ -102,7 +102,7 @@ export default {
 
     // Wait untill alle the connections are done
     Promise.all(connectTeamsAndEventsAndNation).then(() => {
-      console.log("All Connected", object.eventorId, object);
+      console.log("All Connected", object.id, object);
 
       // Make sure to not save the same runner twice
       RunnerModel.findOneAndUpdate(query, object, options, function(

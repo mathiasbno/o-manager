@@ -59,10 +59,7 @@ function processEvent(data) {
           individualResultObject(result, event.id, team.id, __class)
         );
 
-        if (
-          itemInArray(runners, _runner.eventorId) &&
-          !isVacantRunner(_runner)
-        ) {
+        if (itemInArray(runners, _runner.id) && !isVacantRunner(_runner)) {
           runners.push(_runner);
         }
       });
@@ -107,10 +104,7 @@ function processRelayEvent(data) {
           const result = relayResultObject(runner, event.id, _team.id, __class);
           _runner.results.push(result);
 
-          if (
-            itemInArray(runners, _runner.eventorId) &&
-            !isVacantRunner(_runner)
-          ) {
+          if (itemInArray(runners, _runner.id) && !isVacantRunner(_runner)) {
             runners.push(_runner);
           }
         });
