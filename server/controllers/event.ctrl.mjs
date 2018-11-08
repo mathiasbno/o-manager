@@ -12,6 +12,12 @@ export default {
       next();
     });
   },
+  deleteEvents: (req, res, next) => {
+    EventModel.remove({}, function(err) {
+      if (err) return handleError(err);
+      next();
+    });
+  },
   getAll: (req, res, next) => {
     EventModel.find(req.params.id).exec((err, event) => {
       if (err) res.send(err);
