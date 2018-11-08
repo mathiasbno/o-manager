@@ -1,9 +1,10 @@
-function individualResultObject(result, eventId, teamId) {
+function individualResultObject(result, eventId, teamId, _class) {
   const timeBehind = result.TimeDiff ? result.TimeDiff : 0;
   const position = result.ResultPosition ? result.ResultPosition : 0;
   const time = result.Time ? result.Time : 0;
 
   const resultObject = {
+    class: _class,
     team: parseInt(teamId || 0),
     status: result.CompetitorStatus.value,
     time: time,
@@ -15,7 +16,7 @@ function individualResultObject(result, eventId, teamId) {
   return resultObject;
 }
 
-function relayResultObject(result, eventId, teamId) {
+function relayResultObject(result, eventId, teamId, _class) {
   const timeBehind = result.TimeBehind ? result.TimeBehind._ : "0";
   const legPosition = result.Position ? result.Position._ : 0;
   const time = result.Time ? result.Time : 0;
@@ -24,6 +25,7 @@ function relayResultObject(result, eventId, teamId) {
     : 0;
 
   const resultObject = {
+    class: _class,
     team: parseInt(teamId || 0),
     status: result.CompetitorStatus.value,
     time: time,

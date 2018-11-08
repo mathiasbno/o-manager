@@ -12,6 +12,10 @@ const RunnerSchema = new Schema({
   nationality: { type: mongoose.Types.ObjectId, ref: "Nation" },
   results: [
     {
+      class: {
+        id: Number,
+        name: String
+      },
       team: { type: mongoose.Types.ObjectId, ref: "Team" },
       status: String,
       time: String,

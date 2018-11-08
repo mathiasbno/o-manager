@@ -16,6 +16,11 @@ function processEvent(data) {
 
   if (data.ClassResult) {
     data.ClassResult.forEach(_class => {
+      const __class = {
+        id: _class.EventClass.EventClassId,
+        name: _class.EventClass.Name
+      };
+
       ensureArray(_class.PersonResult).forEach(runner => {
         const team = teamObject(runner.Organisation);
 
@@ -42,7 +47,9 @@ function processEvent(data) {
           result = runner.RaceResult.Result;
         }
 
-        _runner.results.push(individualResultObject(result, event.id, team.id));
+        _runner.results.push(
+          individualResultObject(result, event.id, team.id, __class)
+        );
 
         if (itemInArray(runners, _runner.eventorId.seId)) {
           runners.push(_runner);
@@ -63,6 +70,10 @@ function processRelayEvent(data) {
 
   if (data.ClassResult) {
     data.ClassResult.forEach(_class => {
+      const __class = {
+        id: _class.EventClass.EventClassId,
+        name: _class.EventClass.Name
+      };
       _class.TeamResult.forEach(team => {
         const _team = teamObject(team.Organisation);
 
@@ -82,7 +93,7 @@ function processRelayEvent(data) {
           }
 
           const _runner = runnerObject(runner);
-          const result = relayResultObject(runner, event.id, _team.id);
+          const result = relayResultObject(runner, event.id, _team.id, __class);
           _runner.results.push(result);
 
           if (itemInArray(runners, _runner.eventorId.seId)) {
