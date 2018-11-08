@@ -1,11 +1,19 @@
 const { runnerObject } = require("../helpers/runnerHelper.js");
-const { nationObject } = require("../helpers/nationHelper.js");
+const { nationObject, unknownNation } = require("../helpers/nationHelper.js");
 const {
   relayResultObject,
   individualResultObject
 } = require("../helpers/resultHelper.js");
-const { eventObject, teamObject } = require("../helpers/eventHelper.js");
-const { itemInArray, ensureArray } = require("../helpers/helper.js");
+const {
+  eventObject,
+  teamObject,
+  unknownTeam
+} = require("../helpers/eventHelper.js");
+const {
+  itemInArray,
+  ensureArray,
+  isVacantRunner
+} = require("../helpers/helper.js");
 
 function processEvent(data) {
   const event = eventObject(data.Event);
@@ -51,7 +59,10 @@ function processEvent(data) {
           individualResultObject(result, event.id, team.id, __class)
         );
 
-        if (itemInArray(runners, _runner.eventorId.seId)) {
+        if (
+          itemInArray(runners, _runner.eventorId) &&
+          !isVacantRunner(_runner)
+        ) {
           runners.push(_runner);
         }
       });
@@ -64,8 +75,8 @@ function processEvent(data) {
 function processRelayEvent(data) {
   const event = eventObject(data.Event);
 
-  const nations = [];
-  const teams = [];
+  const nations = [unknownNation()];
+  const teams = [unknownTeam()];
   const runners = [];
 
   if (data.ClassResult) {
@@ -96,7 +107,10 @@ function processRelayEvent(data) {
           const result = relayResultObject(runner, event.id, _team.id, __class);
           _runner.results.push(result);
 
-          if (itemInArray(runners, _runner.eventorId.seId)) {
+          if (
+            itemInArray(runners, _runner.eventorId) &&
+            !isVacantRunner(_runner)
+          ) {
             runners.push(_runner);
           }
         });

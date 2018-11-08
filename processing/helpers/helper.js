@@ -32,9 +32,14 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function isVacantRunner(runner) {
+  return runner.eventorId === 0;
+}
+
 module.exports.itemInArray = itemInArray;
 module.exports.ensureArray = ensureArray;
 module.exports.asyncForEach = asyncForEach;
 module.exports.filterRunnersByEventId = filterRunnersByEventId;
 module.exports.findResultById = findResultById;
 module.exports.getRandomInt = getRandomInt;
+module.exports.isVacantRunner = isVacantRunner;
