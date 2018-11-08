@@ -33,7 +33,7 @@ function getRandomInt(max) {
 }
 
 function isVacantRunner(runner) {
-  return runner.eventorId === 0;
+  return runner.id === 0;
 }
 
 module.exports.itemInArray = itemInArray;

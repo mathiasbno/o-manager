@@ -17,7 +17,7 @@ function runnerObject(runner) {
       given: runner.Person.PersonName.Given._,
       family: runner.Person.PersonName.Family
     },
-    eventorId: parseInt(runner.Person.PersonId || 0),
+    id: parseInt(runner.Person.PersonId || 0),
     gender: gender,
     birthYear: birthDate,
     nationality: parseInt(nationalityId || 0),

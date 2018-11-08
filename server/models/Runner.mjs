@@ -6,7 +6,7 @@ const RunnerSchema = new Schema({
     given: String,
     family: String
   },
-  eventorId: Number,
+  id: Number,
   gender: String,
   birthYear: String,
   nationality: { type: mongoose.Types.ObjectId, ref: "Nation" },
