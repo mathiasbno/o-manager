@@ -1,6 +1,6 @@
-const { saveData, saveConnectedData } = require("../database/index.js");
-const { processRelayEvent, processEvent } = require("./process.js");
-const { asyncForEach } = require("../helpers/helper.js");
+import { saveData, saveConnectedData } from "../database/index";
+import { processRelayEvent, processEvent } from "./process";
+import { asyncForEach } from "../helpers/helper";
 
 function processAndSaveRelayEvent(eventor, eventId, dryrun = false) {
   eventor.resultsEvent(eventId).then(result => {
@@ -60,5 +60,4 @@ function processAndSaveEvent(eventor, eventId, dryrun = false) {
   });
 }
 
-module.exports.processAndSaveRelayEvent = processAndSaveRelayEvent;
-module.exports.processAndSaveEvent = processAndSaveEvent;
+export { processAndSaveRelayEvent, processAndSaveEvent };

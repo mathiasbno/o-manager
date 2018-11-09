@@ -28,4 +28,4 @@ function runnerObject(runner) {
   return runnerObject;
 }
 
-module.exports.runnerObject = runnerObject;
+export default runnerObject;

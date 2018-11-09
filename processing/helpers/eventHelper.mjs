@@ -15,6 +15,4 @@ function unknownTeam() {
   return { name: "Unknown", id: 0 };
 }
 
-module.exports.eventObject = eventObject;
-module.exports.teamObject = teamObject;
-module.exports.unknownTeam = unknownTeam;
+export { eventObject, teamObject, unknownTeam };

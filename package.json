@@ -20,7 +20,7 @@
     "xml2js-parser": "^1.1.1"
   },
   "scripts": {
-    "start": "nodemon processing/index.js",
+    "start": "nodemon --experimental-modules processing/index.mjs",
     "serve": "nodemon --experimental-modules server/server.mjs"
   }
 }

@@ -1,5 +1,5 @@
-const { get, post } = require("./helpers.js");
-const { asyncForEach } = require("../helpers/helper.js");
+import { get, post } from "./helpers";
+import { asyncForEach } from "../helpers/helper";
 
 const saveData = function(url, data) {
   return new Promise(resolve => {
@@ -49,6 +49,4 @@ function saveConnectedData(event, nations, teams) {
   return [saveEvent, saveNations, saveTeams];
 }
 
-module.exports.saveData = saveData;
-module.exports.getData = getData;
-module.exports.saveConnectedData = saveConnectedData;
+export { saveData, getData, saveConnectedData };

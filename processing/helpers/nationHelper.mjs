@@ -1,4 +1,4 @@
-const { ensureArray } = require("./helper.js");
+import { ensureArray } from "./helper";
 
 function nationObject(nationality) {
   const nation = {
@@ -30,5 +30,4 @@ function unknownNation() {
   };
 }
 
-module.exports.nationObject = nationObject;
-module.exports.unknownNation = unknownNation;
+export { nationObject, unknownNation };

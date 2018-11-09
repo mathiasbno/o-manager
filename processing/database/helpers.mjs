@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 const defaultHeaders = {
   "Content-Type": "application/json; charset=utf-8"
@@ -26,5 +26,4 @@ const post = function(url, data, params) {
   });
 };
 
-module.exports.get = get;
-module.exports.post = post;
+export { get, post };

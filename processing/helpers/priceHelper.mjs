@@ -1,5 +1,5 @@
-const { getData, saveData } = require("../database/index.js");
-const { findResultById, asyncForEach } = require("./helper.js");
+import { getData, saveData } from "../database/index";
+import { findResultById, asyncForEach } from "./helper";
 
 function getPriceRangeForType(eventForm, position) {
   let price = 0;
@@ -82,5 +82,4 @@ function setPriceForRunners(priceForEvent, basedOnEvent, customEventForm) {
     });
 }
 
-module.exports.calculatePrice = calculatePrice;
-module.exports.setPriceForRunners = setPriceForRunners;
+export { calculatePrice, setPriceForRunners };

@@ -42,5 +42,4 @@ function relayResultObject(result, eventId, teamId, _class) {
   return resultObject;
 }
 
-module.exports.individualResultObject = individualResultObject;
-module.exports.relayResultObject = relayResultObject;
+export { individualResultObject, relayResultObject };

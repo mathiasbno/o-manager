@@ -1,9 +1,9 @@
-const { getData, saveData } = require("../database/index.js");
-const {
+import { getData, saveData } from "../database/index";
+import {
   findResultById,
   asyncForEach,
   filterRunnersByEventId
-} = require("./helper.js");
+} from "./helper.js";
 
 function pointsFormula(x, maxScore) {
   const A = maxScore;
@@ -81,7 +81,9 @@ function getPointsForTeam(team, pointsForEvent) {
   return teamPoints;
 }
 
-module.exports.calculatPoints = calculatPoints;
-module.exports.setPointForRunners = setPointForRunners;
-module.exports.getPointsForRunner = getPointsForRunner;
-module.exports.getPointsForTeam = getPointsForTeam;
+export {
+  calculatPoints,
+  setPointForRunners,
+  getPointsForRunner,
+  getPointsForTeam
+};

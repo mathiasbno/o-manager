@@ -1,19 +1,11 @@
-const { runnerObject } = require("../helpers/runnerHelper.js");
-const { nationObject, unknownNation } = require("../helpers/nationHelper.js");
-const {
+import runnerObject from "../helpers/runnerHelper";
+import { nationObject, unknownNation } from "../helpers/nationHelper";
+import {
   relayResultObject,
   individualResultObject
-} = require("../helpers/resultHelper.js");
-const {
-  eventObject,
-  teamObject,
-  unknownTeam
-} = require("../helpers/eventHelper.js");
-const {
-  itemInArray,
-  ensureArray,
-  isVacantRunner
-} = require("../helpers/helper.js");
+} from "../helpers/resultHelper";
+import { eventObject, teamObject, unknownTeam } from "../helpers/eventHelper";
+import { itemInArray, ensureArray, isVacantRunner } from "../helpers/helper";
 
 function processEvent(data) {
   const event = eventObject(data.Event);
@@ -115,5 +107,4 @@ function processRelayEvent(data) {
   return { event, teams, nations, runners };
 }
 
-module.exports.processRelayEvent = processRelayEvent;
-module.exports.processEvent = processEvent;
+export { processRelayEvent, processEvent };

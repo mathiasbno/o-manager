@@ -1,4 +1,4 @@
-const { get } = require("./helpers/helper.js");
+import { get } from "./helpers/helper";
 
 class EventorApi {
   constructor(config) {
@@ -92,4 +92,4 @@ class EventorApi {
   }
 }
 
-module.exports = EventorApi;
+export default EventorApi;
