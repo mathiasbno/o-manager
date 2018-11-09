@@ -3,7 +3,7 @@ import { TeamModel } from "../models/Team.mjs";
 export default {
   saveTeam: (req, res, next) => {
     const query = { id: req.body.id };
-    const options = { upsert: true, setDefaultsOnInsert: true };
+    const options = { upsert: true, setDefaultsOnInsert: true, new: true };
 
     TeamModel.findOneAndUpdate(query, req.body, options, function(err, team) {
       if (err) res.send(err);

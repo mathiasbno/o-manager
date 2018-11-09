@@ -5,8 +5,6 @@ import { EventModel } from "../models/Event.mjs";
 
 export default {
   saveRunner: (req, res, next) => {
-    const query = { id: req.body.id };
-    const options = { upsert: true, setDefaultsOnInsert: true };
     const object = req.body;
 
     console.log("Starting", object.id);
@@ -111,6 +109,9 @@ export default {
         })
       )
     );
+
+    const query = { id: req.body.id };
+    const options = { upsert: true, setDefaultsOnInsert: true, new: true };
 
     // Wait untill alle the connections are done
     Promise.all(connectTeamsAndEventsAndNation).then(() => {

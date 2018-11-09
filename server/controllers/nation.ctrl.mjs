@@ -3,7 +3,7 @@ import { NationModel } from "../models/Nation.mjs";
 export default {
   saveNation: (req, res, next) => {
     const query = { id: req.body.id };
-    const options = { upsert: true, setDefaultsOnInsert: true };
+    const options = { upsert: true, setDefaultsOnInsert: true, new: true };
 
     NationModel.findOneAndUpdate(query, req.body, options, function(
       err,
