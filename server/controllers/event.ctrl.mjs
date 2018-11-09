@@ -3,7 +3,7 @@ import { EventModel } from "../models/Event.mjs";
 export default {
   saveEvent: (req, res, next) => {
     const query = { id: req.body.id };
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    const options = { upsert: true, setDefaultsOnInsert: true };
 
     EventModel.findOneAndUpdate(query, req.body, options, function(err, event) {
       if (err) res.send(err);

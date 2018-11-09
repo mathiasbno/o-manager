@@ -1,22 +1,12 @@
-import mongoose from "mongoose";
-
 import { RunnerModel } from "../models/Runner.mjs";
 import { NationModel } from "../models/Nation.mjs";
 import { TeamModel } from "../models/Team.mjs";
 import { EventModel } from "../models/Event.mjs";
 
-const ObjectId = mongoose.Types.ObjectId;
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
-
 export default {
   saveRunner: (req, res, next) => {
     const query = { id: req.body.id };
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    const options = { upsert: true, setDefaultsOnInsert: true };
     const object = req.body;
 
     console.log("Starting", object.id);
@@ -100,9 +90,31 @@ export default {
       );
     }
 
+    connectTeamsAndEventsAndNation.push(
+      new Promise((resolve, reject) =>
+        RunnerModel.findOne({ id: object.id }).exec((err, runner) => {
+          if (runner) {
+            const eventAlreadySaved = runner.results.find(function(result) {
+              return (
+                parseInt(result.class.id) ===
+                parseInt(object.results[0].class.id)
+              );
+            });
+
+            // If a runner runs more then one class in an event we want to save both results
+            if (!eventAlreadySaved) {
+              object.results = runner.results.concat(object.results);
+            }
+          }
+          if (err) reject(err);
+          else resolve(object);
+        })
+      )
+    );
+
     // Wait untill alle the connections are done
     Promise.all(connectTeamsAndEventsAndNation).then(() => {
-      console.log("All Connected", object.id, object);
+      console.log("All Connected", object.id);
 
       // Make sure to not save the same runner twice
       RunnerModel.findOneAndUpdate(query, object, options, function(
@@ -117,7 +129,7 @@ export default {
     });
   },
   deleteRunners: (req, res, next) => {
-    RunnerModel.remove({}, function(err) {
+    RunnerModel.deleteMany({}, function(err) {
       if (err) return handleError(err);
       next();
     });

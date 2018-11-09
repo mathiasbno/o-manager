@@ -104,7 +104,7 @@ function processRelayEvent(data) {
           const result = relayResultObject(runner, event.id, _team.id, __class);
           _runner.results.push(result);
 
-          if (itemInArray(runners, _runner.id) && !isVacantRunner(_runner)) {
+          if (!isVacantRunner(_runner)) {
             runners.push(_runner);
           }
         });
