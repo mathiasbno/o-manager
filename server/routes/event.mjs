@@ -1,6 +1,8 @@
 import eventController from "../controllers/event.ctrl.mjs";
 
 export default router => {
+  router.route("/events/delete").get(eventController.deleteEvents);
+
   /* GET */
   router.route("/events").get(eventController.getAll);
 
