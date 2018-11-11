@@ -2,6 +2,7 @@ import { RunnerModel } from "../models/Runner.mjs";
 import { NationModel } from "../models/Nation.mjs";
 import { TeamModel } from "../models/Team.mjs";
 import { EventModel } from "../models/Event.mjs";
+import { findOneById } from "../helpers/helper";
 
 export default {
   saveRunner: (req, res, next) => {
@@ -13,86 +14,61 @@ export default {
     const connectTeamsAndEventsAndNation = [];
 
     object.results.forEach(result => {
-      if (!result.team._id) {
-        connectTeamsAndEventsAndNation.push(
-          new Promise((resolve, reject) =>
-            TeamModel.find({
-              id: result.team
-            }).exec((err, team) => {
-              result.team = team[0]._id;
-              if (err) reject(err);
-              else resolve(team[0]._id);
-            })
-          )
-        );
-      }
+      connectTeamsAndEventsAndNation.push(
+        findOneById(TeamModel, result.team)
+          .then(teamId => {
+            result.team = teamId;
+          })
+          .catch(err => {
+            console.log(err);
+          }),
 
-      if (!result.event._id) {
-        connectTeamsAndEventsAndNation.push(
-          new Promise((resolve, reject) =>
-            EventModel.find({
-              id: result.event
-            }).exec((err, event) => {
-              result.event = event[0]._id;
-              if (err) reject(event, err);
-              else resolve(event[0]._id);
-            })
-          )
-        );
-      }
+        findOneById(EventModel, result.event)
+          .then(eventId => {
+            result.event = eventId;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      );
     });
 
     object.price.forEach(price => {
-      console.log(price.event.toString());
-      if (!price.event._id) {
-        connectTeamsAndEventsAndNation.push(
-          new Promise((resolve, reject) =>
-            EventModel.find({
-              _id: price.event.toString()
-            }).exec((err, event) => {
-              price.event = event[0]._id;
-              if (err) reject(err);
-              else resolve(event[0]._id);
-            })
-          )
-        );
-      }
+      connectTeamsAndEventsAndNation.push(
+        findOneById(EventModel, price.event)
+          .then(eventId => {
+            price.event = eventId;
+          })
+          .catch(err => {
+            console.log(err);
+          }),
 
-      if (!price.priceBasedOn._id) {
-        connectTeamsAndEventsAndNation.push(
-          new Promise((resolve, reject) =>
-            EventModel.find({
-              _id: price.priceBasedOn.toString()
-            }).exec((err, event) => {
-              price.priceBasedOn = event[0]._id;
-              if (err) reject(event, err);
-              else resolve(event[0]._id);
-            })
-          )
-        );
-      }
+        findOneById(EventModel, price.priceBasedOn)
+          .then(eventId => {
+            price.priceBasedOn = eventId;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      );
     });
 
-    // Return all the connected elements
-    if (!object.nationality._id) {
-      connectTeamsAndEventsAndNation.push(
-        new Promise((resolve, reject) =>
-          NationModel.find({
-            id: object.nationality
-          }).exec((err, nation) => {
-            object.nationality = nation[0]._id;
-            if (err) reject(err);
-            else resolve(nation[0]._id);
-          })
-        )
-      );
-    }
+    connectTeamsAndEventsAndNation.push(
+      findOneById(NationModel, object.nationality)
+        .then(nationalityId => {
+          object.nationality = nationalityId;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    );
 
     connectTeamsAndEventsAndNation.push(
-      new Promise((resolve, reject) =>
-        RunnerModel.findOne({ id: object.id }).exec((err, runner) => {
-          if (runner) {
-            const eventAlreadySaved = runner.results.find(function(result) {
+      new Promise((resolve, reject) => {
+        RunnerModel.find({ id: object.id }).exec((err, runner) => {
+          if (runner.length) {
+            const _runner = runner[0];
+            const eventAlreadySaved = _runner.results.find(function(result) {
               return (
                 parseInt(result.class.id) ===
                 parseInt(object.results[0].class.id)
@@ -101,33 +77,34 @@ export default {
 
             // If a runner runs more then one class in an event we want to save both results
             if (!eventAlreadySaved) {
-              object.results = runner.results.concat(object.results);
+              object.results = _runner.results.concat(object.results);
             }
+            resolve(object);
+          } else {
+            resolve(object);
           }
-          if (err) reject(err);
-          else resolve(object);
-        })
-      )
+        });
+      })
     );
 
-    const query = { id: req.body.id };
-    const options = { upsert: true, setDefaultsOnInsert: true, new: true };
-
     // Wait untill alle the connections are done
-    Promise.all(connectTeamsAndEventsAndNation).then(() => {
-      console.log("All Connected", object.id);
+    Promise.all(connectTeamsAndEventsAndNation)
+      .then(() => {
+        const query = { id: req.body.id };
+        const options = { upsert: true, setDefaultsOnInsert: true, new: true };
+        console.log("All Connected", object.id);
 
-      // Make sure to not save the same runner twice
-      RunnerModel.findOneAndUpdate(query, object, options, function(
-        err,
-        runner
-      ) {
-        if (err) res.send(err);
-        else if (!runner) res.send(400);
-        else res.send(runner);
-        next();
+        // Make sure to not save the same runner twice
+        RunnerModel.findOneAndUpdate(query, object, options, (err, runner) => {
+          if (err) res.send(err);
+          else if (!runner) res.sendStatus(400);
+          else res.send(runner);
+          next();
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    });
   },
   deleteRunners: (req, res, next) => {
     RunnerModel.deleteMany({}, function(err) {
@@ -136,13 +113,13 @@ export default {
     });
   },
   getAll: (req, res, next) => {
-    RunnerModel.find(req.params.id)
+    RunnerModel.find()
       .populate("nationality")
       .populate("results.team")
       .populate("results.event")
       .exec((err, runner) => {
         if (err) res.send(err);
-        else if (!runner) res.send(400);
+        else if (!runner) res.sendStatus(400);
         else res.send(runner);
         next();
       });
@@ -154,7 +131,7 @@ export default {
       .populate("results.event")
       .exec((err, runner) => {
         if (err) res.send(err);
-        else if (!runner.length) res.send(404);
+        else if (!runner.length) res.sendStatus(404);
         else res.send(runner[0]);
         next();
       });

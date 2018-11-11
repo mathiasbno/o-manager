@@ -1,5 +1,5 @@
+import validator from "validator";
 import EventorApi from "../../processing/eventor-api/index";
-
 function getEventor(eventor) {
   let _eventor = null;
 
@@ -35,4 +35,24 @@ function getEventor(eventor) {
   return _eventor;
 }
 
-export { getEventor };
+const findOneById = function(model, id) {
+  return new Promise((resolve, reject) => {
+    if (typeof id == "object") {
+      resolve(id);
+    } else {
+      let query = { id: id };
+      if (validator.isMongoId(id.toString())) {
+        query = { _id: id.toString() };
+      }
+
+      console.log(query);
+
+      model.findOne(query).exec((err, _model) => {
+        if (err) reject(err);
+        else resolve(_model._id);
+      });
+    }
+  });
+};
+
+export { getEventor, findOneById };
