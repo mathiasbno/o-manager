@@ -6,7 +6,7 @@ import routes from "./routes/index.mjs";
 
 const app = express();
 const router = express.Router();
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 const url = process.env.MONGODB_URI || "mongodb://localhost:27017/o-manager";
 
 try {
