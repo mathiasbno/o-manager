@@ -5,7 +5,13 @@ const EventSchema = new Schema({
   name: String,
   id: Number,
   startDate: Date,
-  eventForm: String
+  eventForm: String,
+  classes: [
+    {
+      name: String,
+      id: Number
+    }
+  ]
 });
 
 const EventModel = mongoose.model("Event", EventSchema);

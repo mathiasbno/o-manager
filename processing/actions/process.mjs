@@ -8,7 +8,7 @@ import { eventObject, teamObject, unknownTeam } from "../helpers/eventHelper";
 import { itemInArray, ensureArray, isVacantRunner } from "../helpers/helper";
 
 function processEvent(data) {
-  const event = eventObject(data.Event);
+  const event = eventObject(data.Event, data.ClassResult);
 
   const nations = [unknownNation()];
   const teams = [unknownTeam()];
@@ -62,7 +62,7 @@ function processEvent(data) {
 }
 
 function processRelayEvent(data) {
-  const event = eventObject(data.Event);
+  const event = eventObject(data.Event, data.ClassResult);
 
   const nations = [unknownNation()];
   const teams = [unknownTeam()];

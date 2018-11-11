@@ -1,9 +1,17 @@
-function eventObject(event) {
+function eventObject(event, classes) {
+  const _classes = classes.map(_class => {
+    return {
+      name: _class.EventClass.Name,
+      id: parseInt(_class.EventClass.EventClassId)
+    };
+  });
+
   return {
     name: event.Name,
     id: parseInt(event.EventId),
     startDate: event.StartDate.Date,
-    eventForm: event.eventForm
+    eventForm: event.eventForm,
+    classes: _classes
   };
 }
 
