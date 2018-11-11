@@ -45,8 +45,6 @@ const findOneById = function(model, id) {
         query = { _id: id.toString() };
       }
 
-      console.log(query);
-
       model.findOne(query).exec((err, _model) => {
         if (err) reject(err);
         else resolve(_model._id);

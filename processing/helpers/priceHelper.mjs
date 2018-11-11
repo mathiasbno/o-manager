@@ -1,5 +1,5 @@
 import { getData, saveData } from "../database/index";
-import { findResultById, asyncForEach } from "./helper";
+import { findResultById, asyncForEach, filterRunnersByEventId } from "./helper";
 
 function getPriceRangeForType(eventForm, position) {
   let price = 0;
@@ -29,6 +29,21 @@ function getPriceRangeForType(eventForm, position) {
           price = 500;
           break;
       }
+    case eventForm === "IndSingleDay":
+      switch (true) {
+        case position < 1:
+          price = 500;
+          break;
+        case position < 11:
+          price = 5000;
+          break;
+        case position < 100:
+          price = 1000;
+          break;
+        default:
+          price = 500;
+          break;
+      }
   }
 
   return price;
@@ -46,19 +61,14 @@ function calculatePrice(position, priceForEventId, eventId, eventForm, _class) {
   };
 }
 
-function setPriceForRunners(
-  priceForEvent,
-  basedOnEvent,
-  basedOnClass,
-  customEventForm
-) {
+function setPriceForRunners(priceForEvent, basedOnEvent, customEventForm) {
   getData(`${process.env.API_URL}/runners`)
     .then(runners => {
-      asyncForEach(runners, async function(runner) {
+      const _runners = filterRunnersByEventId(runners, priceForEvent);
+
+      asyncForEach(_runners, async function(runner) {
         let result = findResultById(runner.results, basedOnEvent);
         let newPrice = null;
-
-        console.log(result);
 
         // Check if the runner did run the evaluation race
         if (result.length) {
@@ -66,7 +76,7 @@ function setPriceForRunners(
           if (result.length > 1) {
             result.forEach(_result => {
               // TODO: Enable none relay races also
-              const position = _result.legPosition;
+              const position = _result.legPosition || _result.position;
               const event = _result.event;
               newPrice = calculatePrice(
                 position,
@@ -87,7 +97,7 @@ function setPriceForRunners(
             });
           } else {
             const _result = result[0];
-            const position = _result.legPosition;
+            const position = _result.legPosition || _result.position;
             const event = _result.event;
             newPrice = calculatePrice(
               position,

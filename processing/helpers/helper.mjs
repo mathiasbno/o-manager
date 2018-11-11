@@ -23,9 +23,9 @@ function findResultById(results, id) {
 }
 
 function filterRunnersByEventId(runners, eventId) {
-  return runners.filter(function(runner) {
-    return findResultById(runner.results, eventId);
-  });
+  return runners.filter(runner =>
+    runner.results.find(result => result.event.id === eventId)
+  );
 }
 
 function getRandomInt(max) {
