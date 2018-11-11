@@ -17,8 +17,8 @@ async function asyncForEach(array, callback) {
 }
 
 function findResultById(results, id) {
-  return results.find(function(result) {
-    return result.event._id === id;
+  return results.filter(function(result) {
+    return result.event.id === id;
   });
 }
 

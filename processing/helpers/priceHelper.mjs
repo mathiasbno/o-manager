@@ -34,38 +34,78 @@ function getPriceRangeForType(eventForm, position) {
   return price;
 }
 
-function calculatePrice(position, priceForEventId, eventId, EventForm) {
-  const cost = getPriceRangeForType(EventForm, position);
+function calculatePrice(position, priceForEventId, eventId, eventForm, _class) {
+  const cost = getPriceRangeForType(eventForm, position);
 
   return {
     event: priceForEventId,
     priceBasedOn: eventId,
     cost: cost,
-    eventForm: EventForm
+    eventForm: eventForm,
+    class: _class
   };
 }
 
-function setPriceForRunners(priceForEvent, basedOnEvent, customEventForm) {
+function setPriceForRunners(
+  priceForEvent,
+  basedOnEvent,
+  basedOnClass,
+  customEventForm
+) {
   getData(`${process.env.API_URL}/runners`)
     .then(runners => {
       asyncForEach(runners, async function(runner) {
-        const result = findResultById(runner.results, basedOnEvent);
-        const position = result.legPosition;
-        const event = result.event;
-        const newPrice = calculatePrice(
-          position,
-          priceForEvent,
-          event._id,
-          event.eventForm || customEventForm
-        );
+        let result = findResultById(runner.results, basedOnEvent);
+        let newPrice = null;
 
-        // Make sure that the price calculation does not already excist for this event
-        const found = runner.price.findIndex(function(element) {
-          return element.event === newPrice.event;
-        });
+        console.log(result);
 
-        if (found < 0) {
-          runner.price.push(newPrice);
+        // Check if the runner did run the evaluation race
+        if (result.length) {
+          // If runner has more results in the same event
+          if (result.length > 1) {
+            result.forEach(_result => {
+              // TODO: Enable none relay races also
+              const position = _result.legPosition;
+              const event = _result.event;
+              newPrice = calculatePrice(
+                position,
+                priceForEvent,
+                basedOnEvent,
+                event.eventForm || customEventForm,
+                _result.class
+              );
+
+              // Make sure that the price calculation does not already excist for this class
+              const found = runner.price.findIndex(function(element) {
+                return element.class.id === newPrice.class.id;
+              });
+
+              if (found < 0) {
+                runner.price.push(newPrice);
+              }
+            });
+          } else {
+            const _result = result[0];
+            const position = _result.legPosition;
+            const event = _result.event;
+            newPrice = calculatePrice(
+              position,
+              priceForEvent,
+              basedOnEvent,
+              event.eventForm || customEventForm,
+              _result.class
+            );
+
+            // Make sure that the price calculation does not already excist for this class
+            const found = runner.price.findIndex(function(element) {
+              return element.class.id === newPrice.class.id;
+            });
+
+            if (found < 0) {
+              runner.price.push(newPrice);
+            }
+          }
 
           await saveData(`${process.env.API_URL}/runner`, runner)
             .then(data => {
