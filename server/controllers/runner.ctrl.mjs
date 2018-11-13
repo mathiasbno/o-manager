@@ -124,6 +124,31 @@ export default {
         next();
       });
   },
+  getAllByEvent: (req, res, next) => {
+    RunnerModel.find({ results: { $elemMatch: { event: req.params.id } } })
+      .populate("nationality")
+      .populate("results.team")
+      .populate("results.event")
+      .exec((err, runners) => {
+        if (err) res.send(err);
+        else if (!runners) res.sendStatus(400);
+        else res.send(runners);
+        next();
+      });
+  },
+  getAllByPriceForEvent: (req, res, next) => {
+    RunnerModel.find({ price: { $elemMatch: { event: req.params.id } } })
+      .populate("nationality")
+      .populate("results.team")
+      .populate("results.event")
+      .exec((err, runners) => {
+        console.log(runners.length);
+        if (err) res.send(err);
+        else if (!runners) res.sendStatus(400);
+        else res.send(runners);
+        next();
+      });
+  },
   getRunner: (req, res, next) => {
     RunnerModel.find({ _id: req.params.id })
       .populate("nationality")

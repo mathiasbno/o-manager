@@ -6,7 +6,10 @@ export default router => {
 
   /* GET */
   router.route("/runners").get(runnerController.getAll);
-
+  router.route("/runners/event/:id").get(runnerController.getAllByEvent);
+  router
+    .route("/runners/price/:id")
+    .get(runnerController.getAllByPriceForEvent);
   router.route("/runner/:id").get(runnerController.getRunner);
 
   /* POST */
