@@ -59,6 +59,12 @@ This is determined by the Eventor ID that is stored on each element. This id is 
 
 ### First import
 
+```
+
+–––– THIS WILL BE CHANGED –––
+
+```
+
 In theory the scripts can import any race from any Eventor, but in this example we'll import a small race from the Norwegian Eventor.
 
 Make sure that you are running the processing task using `yarn start` in the terminal.
@@ -109,7 +115,7 @@ Before we have a working Alpha we need to get in place the following:
 
 ### Roadmap
 
-- [ ] Enable deployment to server (maybe Docker)
+- [ ] Enable deployment to server [https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0](See article)
 - [ ] Add worker to fetch info regularly
 - [ ] Add possibility to administrate series and events
 - [ ] Add elaborate frontend to manage teams for different series and events
