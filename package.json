@@ -21,7 +21,10 @@
     "xml2js-parser": "^1.1.1"
   },
   "scripts": {
-    "start": "nodemon --experimental-modules processing/index.mjs",
-    "serve": "nodemon --experimental-modules server/server.mjs"
+    "client": "cd client && yarn start",
+    "dev": "concurrently --kill-others-on-fail \"yarn start\" \"yarn client\"",
+    "process": "nodemon --experimental-modules processing/index.mjs",
+    "server": "node --experimental-modules server/server.mjs",
+    "start": "nodemon --experimental-modules server/server.mjs"
   }
 }
