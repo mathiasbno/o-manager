@@ -75,7 +75,6 @@ function setPriceForRunners(priceForEvent, basedOnEvent, customEventForm) {
           // If runner has more results in the same event
           if (result.length > 1) {
             result.forEach(_result => {
-              // TODO: Enable none relay races also
               const position = _result.legPosition || _result.position;
               const event = _result.event;
               newPrice = calculatePrice(
