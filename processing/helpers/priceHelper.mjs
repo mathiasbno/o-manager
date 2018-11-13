@@ -62,11 +62,9 @@ function calculatePrice(position, priceForEventId, eventId, eventForm, _class) {
 }
 
 function setPriceForRunners(priceForEvent, basedOnEvent, customEventForm) {
-  getData(`${process.env.API_URL}/runners`)
+  getData(`${process.env.API_URL}/runners/event/${priceForEvent}`)
     .then(runners => {
-      const _runners = filterRunnersByEventId(runners, priceForEvent);
-
-      asyncForEach(_runners, async function(runner) {
+      asyncForEach(runners, async function(runner) {
         let result = findResultById(runner.results, basedOnEvent);
         let newPrice = null;
 

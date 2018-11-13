@@ -41,28 +41,29 @@ function calculatPoints(position, status, teamPosition) {
 }
 
 function setPointForRunners(pointsForEvent) {
-  getData(`${process.env.API_URL}/runners`).then(runners => {
-    _runners = filterRunnersByEventId(runners, pointsForEvent);
-    asyncForEach(_runners, async function(runner) {
-      const result = findResultById(runner.results, pointsForEvent);
+  getData(`${process.env.API_URL}/runners/event/${pointsForEvent}`).then(
+    runners => {
+      asyncForEach(runners, async function(runner) {
+        const result = findResultById(runner.results, pointsForEvent);
 
-      const points = calculatPoints(
-        result.legPosition,
-        result.status,
-        result.overallResult.position
-      );
+        const points = calculatPoints(
+          result.legPosition,
+          result.status,
+          result.overallResult.position
+        );
 
-      result.points = points;
+        result.points = points;
 
-      await saveData(`${process.env.API_URL}/runner`, runner)
-        .then(data => {
-          console.log(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    });
-  });
+        await saveData(`${process.env.API_URL}/runner`, runner)
+          .then(data => {
+            console.log(data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    }
+  );
 }
 
 function getPointsForRunner(runner, pointsForEvent) {
