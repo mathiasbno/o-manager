@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import Team from "./Components/Team/Team";
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
+          <Team />
           <a
             className="App-link"
             href="https://reactjs.org"
