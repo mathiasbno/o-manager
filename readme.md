@@ -34,19 +34,19 @@ Make sure you have [direnv](https://direnv.net/) installed. To load them into yo
 To install the app start by running:
 
 ```
-$ yarn install
+$ yarn install && cd client && yarn install
 ```
 
 Now we can start the server:
 
 ```
-$ yarn run serve
+$ yarn run dev
 ```
 
-And the processing:
+For testing imports and calculations you can run the processing seperate with:
 
 ```
-$ yarn start
+$ yarn run process
 ```
 
 In the Processing file you'll find functions to import races, including event data, teams, nations and runners.
