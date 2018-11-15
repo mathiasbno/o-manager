@@ -5,22 +5,34 @@ import actions from "./actions";
 
 class Team extends React.Component {
   render() {
-    const { count, increment, decrement } = this.props;
+    const { runners, loading, errorMessage, getrunners } = this.props;
 
     return (
       <div className="team">
         <h1>My team</h1>
-        <span>{count}</span>
+        {loading ? <span>Loading…</span> : ""}
+        {errorMessage ? <span>{errorMessage}</span> : ""}
+        <ul>
+          {runners.map(function(runner, index) {
+            return <li key={index}>{runner.name.given}</li>;
+          })}
+        </ul>
         <div>
-          <button onClick={decrement}>decrement</button>
-          <button onClick={increment}>increment</button>
+          <button onClick={() => getrunners("5be8961a168b5db0cdc39c82")}>
+            Get runners
+          </button>
         </div>
       </div>
     );
   }
 }
 
-const mapToProps = ({ count }) => ({ count });
+const mapToProps = ({ runners, loading, errorMessage, getrunners }) => ({
+  runners,
+  loading,
+  errorMessage,
+  getrunners
+});
 
 export default connect(
   mapToProps,

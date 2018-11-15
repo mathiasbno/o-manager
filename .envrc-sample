@@ -3,4 +3,4 @@ export EVENTOR_SE_APIKEY=xxxx
 export EVENTOR_IOF_APIKEY=xxxx
 export FIREBASE_API_KEY=xxxx
 
-export API_URL=http://localhost:3000/api
+export API_URL=http://localhost:5000/api

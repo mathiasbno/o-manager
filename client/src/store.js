@@ -1,7 +1,9 @@
 import createStore from "redux-zero";
 
 const initialState = {
-  count: 0
+  loading: false,
+  errorMsg: "",
+  runners: []
 };
 
 const store = createStore(initialState);
