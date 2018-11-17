@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "redux-zero/react";
 
-import actions from "../../store/actions/index";
+import actions from "../../../store/actions/index";
 
 class AddRunner extends React.Component {
   render() {

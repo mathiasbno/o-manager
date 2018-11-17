@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "redux-zero/react";
 
 import { padArray } from "../helper/helpers";
-import AddRunner from "../components/AddRunner";
-import Runner from "../components/Runner";
+import AddRunner from "../components/atoms/AddRunner";
+import Runner from "../components/atoms/Runner";
 
 class Team extends React.Component {
   get team() {
