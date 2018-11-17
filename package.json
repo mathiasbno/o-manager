@@ -17,6 +17,7 @@
     "mongoose": "^5.3.7",
     "node-fetch": "^2.2.0",
     "nodemon": "^1.18.5",
+    "path": "^0.12.7",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "validator": "^10.9.0",
@@ -24,9 +25,10 @@
   },
   "scripts": {
     "client": "cd client && yarn start",
-    "dev": "concurrently --kill-others-on-fail \"yarn start\" \"yarn client\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "process": "nodemon --experimental-modules processing/index.mjs",
-    "server": "node --experimental-modules server/server.mjs",
-    "start": "nodemon --experimental-modules server/server.mjs"
+    "server": "nodemon --experimental-modules server/server.mjs",
+    "start": "node --experimental-modules server/server.mjs",
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   }
 }
