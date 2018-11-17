@@ -126,9 +126,10 @@ export default {
   },
   getAllByEvent: (req, res, next) => {
     RunnerModel.find({ results: { $elemMatch: { event: req.params.id } } })
-      .populate("nationality")
-      .populate("results.team")
-      .populate("results.event")
+      .populate("nationalit", "short")
+      .populate("nationality", "id")
+      .populate("results.team", "name")
+      .populate("results.event", "name")
       .exec((err, runners) => {
         if (err) res.send(err);
         else if (!runners) res.sendStatus(400);

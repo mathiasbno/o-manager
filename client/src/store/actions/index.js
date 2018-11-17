@@ -4,13 +4,8 @@ const actions = store => ({
   getrunners(state, event) {
     store.setState({ loading: true, errorMessage: "" });
 
-    // TODO: convert this ti use env variables fro url
     axios
-      .get(`http://localhost:5000/api/runners/event/${event}`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*"
-        }
-      })
+      .get(`${process.env.REACT_APP_API_URL}/runners/event/${event}`)
       .then(runners => {
         console.log("runners", runners);
         store.setState({ runners: [...runners.data], loading: false });
@@ -18,7 +13,18 @@ const actions = store => ({
       .catch(error => {
         store.setState({ errorMessage: error.message, loading: false });
       });
+  },
+  closeRunnerSelect() {
+    store.setState({ runnerSelectOpen: false });
+  },
+  openRunnerSelect(state, event) {
+    store.setState({ runnerSelectOpen: true });
+  },
+  addRunnerToTeam(_store, runner) {
+    store.setState({
+      team: _store.team.concat(runner),
+      runnerSelectOpen: false
+    });
   }
 });
-
 export default actions;

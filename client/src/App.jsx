@@ -1,30 +1,32 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import Team from "./Components/Team/Team";
+import { connect } from "redux-zero/react";
+
+import Team from "./views/Team";
+import RunnerSelect from "./components/RunnerSelect";
 
 class App extends Component {
   render() {
+    const { loading, errorMessage, runnerSelectOpen } = this.props;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <Team />
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {loading ? <span>Loading…</span> : ""}
+        {errorMessage ? <span>{errorMessage}</span> : ""}
+        {runnerSelectOpen ? (
+          <RunnerSelect event="5be8961a168b5db0cdc39c82" />
+        ) : (
+          ""
+        )}
+        <Team />
       </div>
     );
   }
 }
 
-export default App;
+const mapToProps = ({ loading, errorMessage, runnerSelectOpen }) => ({
+  loading,
+  errorMessage,
+  runnerSelectOpen
+});
+
+export default connect(mapToProps)(App);
