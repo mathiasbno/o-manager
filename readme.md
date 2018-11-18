@@ -115,7 +115,7 @@ Before we have a working Alpha we need to get in place the following:
 
 ### Roadmap
 
-- [ ] Enable deployment to server [https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0](See article)
+- [ ] Enable deployment to server [See article](https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0)
 - [ ] Add worker to fetch info regularly
 - [ ] Add possibility to administrate series and events
 - [ ] Add elaborate frontend to manage teams for different series and events

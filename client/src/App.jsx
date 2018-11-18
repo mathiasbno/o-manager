@@ -8,6 +8,8 @@ class App extends Component {
   render() {
     const { loading, errorMessage, runnerSelectOpen } = this.props;
 
+    console.log(process.env);
+
     return (
       <div className="App">
         {loading ? <span>Loading…</span> : ""}
