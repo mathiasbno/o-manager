@@ -1,0 +1,17 @@
+.tableHeader {
+  align-items: center;
+  display: flex;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  min-height: 31px;
+  padding: 10px;
+  width: 100%;
+  composes: whiteBackground from '../../../assets/styles/variables.module.css';
+}
+
+.title {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  composes: grayColor from '../../../assets/styles/variables.module.css';
+}

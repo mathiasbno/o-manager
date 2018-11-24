@@ -1,0 +1,9 @@
+.metadata {
+  font-weight: normal;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.green{
+  composes: greenColor from "../../../assets/styles/variables.module.css";
+}

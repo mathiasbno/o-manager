@@ -1,0 +1,31 @@
+.runner {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 15px;
+  width: 100%;
+}
+
+.runner:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.number {
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  margin-right: 33px;
+  padding: 3px 8px;
+  composes: whiteBackground from "../../../assets/styles/variables.module.css";
+}
+
+.noRunner {
+  font-size: 18px;
+  font-weight: normal;
+  font-style: italic;
+  flex-grow: 1;
+  margin: 0;
+  composes: grayColor from "../../../assets/styles/variables.module.css";
+}

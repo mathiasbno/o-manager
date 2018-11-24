@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "redux-zero/react";
 
-import Team from "./views/Team";
+import Event from "./views/Event";
 import RunnerSelect from "./components/RunnerSelect";
+
+import style from "./index.module.css";
 
 class App extends Component {
   render() {
@@ -11,7 +13,7 @@ class App extends Component {
     console.log(process.env);
 
     return (
-      <div className="App">
+      <div className={style.reset}>
         {loading ? <span>Loading…</span> : ""}
         {errorMessage ? <span>{errorMessage}</span> : ""}
         {runnerSelectOpen ? (
@@ -19,7 +21,7 @@ class App extends Component {
         ) : (
           ""
         )}
-        <Team />
+        <Event />
       </div>
     );
   }

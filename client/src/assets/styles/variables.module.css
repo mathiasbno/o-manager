@@ -1,0 +1,23 @@
+/* Text colors */
+
+.whiteColor {
+  color: #ffffff;
+}
+
+.grayColor {
+  color: #767676;
+}
+
+.greenColor {
+  color: #68c700;
+}
+
+/* Background colors */
+
+.whiteBackground {
+  background-color: #fff;
+}
+
+.blueBackground {
+  background-color: #0a7bff;
+}

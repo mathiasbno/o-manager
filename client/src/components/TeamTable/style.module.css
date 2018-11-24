@@ -1,0 +1,25 @@
+.colapsed {
+  position: relative;
+}
+
+.colapsed:after {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  content: "";
+  display: block;
+  height: calc(100% + 15px);
+  top: 0;
+  transform: translateX(-15px);
+  position: absolute;
+  width: calc(100% + 30px);
+}
+
+.overflowHidden {
+  height: 160px;
+  overflow: hidden;
+}
+
+.teamTable {
+  display: flex;
+  box-shadow: 0 0 30px 0 rgba(145, 145, 145, 0.25);
+  flex-direction: column;
+}
