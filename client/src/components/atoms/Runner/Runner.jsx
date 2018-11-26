@@ -11,10 +11,18 @@ class Runner extends React.Component {
       <div className={style.runner}>
         {runner ? (
           <React.Fragment>
-            <span className={style.leg}>1</span>
-            <h3 className="name">{runner.name.given}</h3>
-            <span className="metadata">(7. leg – 1. place)</span>
-            {/* <span className="price">-{runner.price[0].cost}p</span> */}
+            <span className={style.number}>1</span>
+            <h3 className={style.name}>{`${runner.name.given} ${
+              runner.name.family
+            }`}</h3>
+            <span className={style.club}>{runner.club}</span>
+            <ul className={style.previousResults}>
+              <li>2018: 9th leg - 2nd best time</li>
+              <li>2017: 8th leg - Best time</li>
+            </ul>
+            <div className={style.actions}>
+              <Button color="red">Remove runner</Button>
+            </div>
           </React.Fragment>
         ) : null}
         {!runner ? (

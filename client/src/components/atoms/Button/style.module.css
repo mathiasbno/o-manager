@@ -17,7 +17,7 @@
 
 .button:hover {
   box-shadow: 2px 3px 50px 0 rgba(1, 0, 255, 0.3);
-  transform: scale(1.01);
+  transform: scale(1.03);
 }
 
 .button:active {
@@ -35,6 +35,22 @@
   font-size: 16px;
   padding: 22px 92px;
   composes: button;
+}
+
+.redButton {
+  box-shadow: 2px 3px 20px 0 rgba(230, 9, 99, 0.5);
+  background-color: #e60963;
+  composes: button;
+}
+
+.redButton:hover {
+  box-shadow: 2px 3px 20px 0 rgba(230, 9, 99, 0.5);
+  transform: scale(1.01);
+}
+
+.errorButton:active {
+  box-shadow: 0 0 0 0 rgba(230, 9, 99, 0.5);
+  top: 3px;
 }
 
 .center {

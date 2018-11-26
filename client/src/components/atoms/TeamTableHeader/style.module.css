@@ -6,6 +6,7 @@
   min-height: 31px;
   padding: 10px;
   width: 100%;
+  z-index: 1;
   composes: whiteBackground from '../../../assets/styles/variables.module.css';
 }
 

@@ -10,7 +10,11 @@ import TeamTable from "../components/TeamTable/TeamTable";
 
 class Event extends React.Component {
   render() {
-    const { team } = this.props;
+    // const { team } = this.props;
+
+    const _team = [
+      { name: { given: "Olav", family: "Lundanes" }, club: "Halden Sk" }
+    ];
 
     return (
       <PageWrapper>
@@ -26,7 +30,7 @@ class Event extends React.Component {
           <Button large center>
             Join Tiomila
           </Button>
-          <TeamTable team={team} colapsed={true} />
+          <TeamTable team={_team} />
         </Card>
       </PageWrapper>
     );

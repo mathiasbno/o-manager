@@ -21,6 +21,35 @@
   composes: whiteBackground from "../../../assets/styles/variables.module.css";
 }
 
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  composes: textColor from "../../../assets/styles/variables.module.css";
+}
+
+.club {
+  font-size: 16px;
+  font-weight: normal;
+  composes: textColor from "../../../assets/styles/variables.module.css";
+}
+
+.previousResults {
+  font-size: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  composes: grayColor from "../../../assets/styles/variables.module.css";
+}
+
+.previousResults li {
+  margin-bottom: 5px;
+}
+
+.previousResults li:last-child {
+  margin-bottom: 0;
+}
+
 .noRunner {
   font-size: 18px;
   font-weight: normal;
@@ -29,3 +58,4 @@
   margin: 0;
   composes: grayColor from "../../../assets/styles/variables.module.css";
 }
+

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { padArray } from "../../helper/helpers";
-import AddRunner from "../atoms/AddRunner/AddRunner";
 import Runner from "../atoms/Runner/Runner";
 import TeamTableHeader from "../atoms/TeamTableHeader/TeamTableHeader";
 
@@ -10,9 +9,9 @@ import styles from "./style.module.css";
 class TeamTable extends React.Component {
   get team() {
     const { team } = this.props;
-    const paddedArray = padArray(team, 10, null);
+    console.log(team);
 
-    console.log(paddedArray);
+    const paddedArray = padArray(team, 10, null);
 
     return paddedArray.map((runner, i) => {
       if (runner == null) return <Runner key={i} />;
