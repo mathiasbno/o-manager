@@ -19,8 +19,9 @@ const url = process.env.MONGODB_URI || "mongodb://localhost:27017/o-manager";
 
 try {
   mongoose.connect(
-    url,
-    { useNewUrlParser: true }
+    url, {
+      useNewUrlParser: true
+    }
   );
 } catch (error) {
   console.log(error);
@@ -34,9 +35,9 @@ app.use("/api", router);
 
 // if (process.env.NODE_ENV === 'production') {
 app.use(express.static(path.join(__dirname, "client/build")));
-app.get("*", function(req, res) {
+app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 // }
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`));

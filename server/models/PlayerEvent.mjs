@@ -3,15 +3,24 @@ const Schema = mongoose.Schema;
 
 const PlayerEventSchema = new Schema({
   event: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Event"
   },
-  runnersInTeam: Number,
-  points: Number,
-  lockDate: Date
+  eventClasses: [{
+    name: String,
+    runnersInTeam: Number,
+    budget: Number,
+    gender: String,
+    startData: Date,
+    lockDate: Date
+  }],
+  players: [{
+    type: Schema.Types.ObjectId,
+    ref: "Player"
+  }],
 });
 
-const PlayerEventModel = mongoose.model("Event", PlayerEventSchema);
+const PlayerEventModel = mongoose.model("PlayerEvent", PlayerEventSchema);
 
 export {
   PlayerEventSchema as

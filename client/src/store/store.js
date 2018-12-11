@@ -5,7 +5,8 @@ const initialState = {
   runnerSelectOpen: false,
   errorMsg: "",
   runners: [],
-  team: []
+  team: [],
+  playerEvents: []
 };
 
 const store = createStore(initialState);

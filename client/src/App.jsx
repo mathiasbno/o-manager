@@ -1,36 +1,51 @@
 import React, { Component } from "react";
 import { connect } from "redux-zero/react";
 
+import actions from "./store/actions/index";
+
 import Event from "./views/Event";
 import RunnerSelect from "./components/RunnerSelect";
 
 import style from "./index.module.css";
 
 class App extends Component {
-  render() {
-    const { loading, errorMessage, runnerSelectOpen } = this.props;
+  componentDidMount() {
+    const { player, getPlayer } = this.props;
 
-    console.log(process.env);
+    if (!player) getPlayer();
+  }
+
+  render() {
+    const { loading, errorMessage, runnerSelectOpen, player } = this.props;
 
     return (
       <div className={style.reset}>
-        {loading ? <span>Loading…</span> : ""}
-        {errorMessage ? <span>{errorMessage}</span> : ""}
+        {loading ? <span>Loading…</span> : null}
+        {errorMessage ? <span>{errorMessage}</span> : null}
         {runnerSelectOpen ? (
           <RunnerSelect event="5be8961a168b5db0cdc39c82" />
-        ) : (
-          ""
-        )}
-        <Event />
+        ) : null}
+        {player ? <Event player={player} /> : null}
       </div>
     );
   }
 }
 
-const mapToProps = ({ loading, errorMessage, runnerSelectOpen }) => ({
+const mapToProps = ({
   loading,
   errorMessage,
-  runnerSelectOpen
+  runnerSelectOpen,
+  player,
+  getPlayer
+}) => ({
+  loading,
+  errorMessage,
+  runnerSelectOpen,
+  player,
+  getPlayer
 });
 
-export default connect(mapToProps)(App);
+export default connect(
+  mapToProps,
+  actions
+)(App);

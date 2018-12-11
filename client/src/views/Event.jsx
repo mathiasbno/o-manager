@@ -1,44 +1,67 @@
 import React from "react";
 import { connect } from "redux-zero/react";
 
+import actions from "../store/actions/index";
+
 import Card from "../components/atoms/Card/Card";
 import PageWrapper from "../components/atoms/PageWrapper/PageWrapper";
 import Title from "../components/atoms/Title/Title";
-import Button from "../components/atoms/Button/Button";
-import RaceMetadata from "../components/atoms/RaceMetadata/RaceMetadata";
-import TeamTable from "../components/TeamTable/TeamTable";
+import Class from "../components/atoms/Class/Class";
 
 class Event extends React.Component {
-  render() {
-    // const { team } = this.props;
+  componentDidMount() {
+    const { playerEvents, getPlayerEvents } = this.props;
 
-    const _team = [
-      { name: { given: "Olav", family: "Lundanes" }, club: "Halden Sk" }
-    ];
+    if (!playerEvents.length) getPlayerEvents();
+  }
+
+  getPlayerEventClasses(playerEvent) {
+    const { player, onJoinPlayerEvent } = this.props;
+
+    return (
+      <React.Fragment>
+        {playerEvent.eventClasses.map((eventClass, i) => (
+          <Class
+            eventClass={eventClass}
+            playerEvent={playerEvent}
+            onJoinPlayerEvent={onJoinPlayerEvent}
+            player={player}
+            key={i}
+          />
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  render() {
+    const { playerEvents } = this.props;
 
     return (
       <PageWrapper>
-        <Card>
-          <Title title="Tiomila i Östra Göinge" />
-          <RaceMetadata
-            name="Tiomila"
-            startData="29th of May"
-            runnersInTeam="10"
-            points="35000"
-            lockTime={new Date().toString()}
-          />
-          <Button large center>
-            Join Tiomila
-          </Button>
-          <TeamTable team={_team} />
-        </Card>
+        {playerEvents.map((playerEvent, i) => (
+          <Card key={`${i}-playerEvent`}>
+            <Title title={playerEvent.event.name} />
+            {this.getPlayerEventClasses(playerEvent)}
+          </Card>
+        ))}
       </PageWrapper>
     );
   }
 }
 
-const mapToProps = ({ team }) => ({
-  team
+const mapToProps = ({
+  team,
+  playerEvents,
+  getPlayerEvents,
+  onJoinPlayerEvent
+}) => ({
+  team,
+  playerEvents,
+  getPlayerEvents,
+  onJoinPlayerEvent
 });
 
-export default connect(mapToProps)(Event);
+export default connect(
+  mapToProps,
+  actions
+)(Event);

@@ -1,8 +1,18 @@
-import { RunnerModel } from "../models/Runner.mjs";
-import { NationModel } from "../models/Nation.mjs";
-import { TeamModel } from "../models/Team.mjs";
-import { EventModel } from "../models/Event.mjs";
-import { findOneById } from "../helpers/helper";
+import {
+  RunnerModel
+} from "../models/Runner.mjs";
+import {
+  NationModel
+} from "../models/Nation.mjs";
+import {
+  TeamModel
+} from "../models/Team.mjs";
+import {
+  EventModel
+} from "../models/Event.mjs";
+import {
+  findOneById
+} from "../helpers/helper";
 
 export default {
   saveRunner: (req, res, next) => {
@@ -16,59 +26,61 @@ export default {
     object.results.forEach(result => {
       connectTeamsAndEventsAndNation.push(
         findOneById(TeamModel, result.team)
-          .then(teamId => {
-            result.team = teamId;
-          })
-          .catch(err => {
-            console.log(err);
-          }),
+        .then(teamId => {
+          result.team = teamId;
+        })
+        .catch(err => {
+          console.log(err);
+        }),
 
         findOneById(EventModel, result.event)
-          .then(eventId => {
-            result.event = eventId;
-          })
-          .catch(err => {
-            console.log(err);
-          })
+        .then(eventId => {
+          result.event = eventId;
+        })
+        .catch(err => {
+          console.log(err);
+        })
       );
     });
 
     object.price.forEach(price => {
       connectTeamsAndEventsAndNation.push(
         findOneById(EventModel, price.event)
-          .then(eventId => {
-            price.event = eventId;
-          })
-          .catch(err => {
-            console.log(err);
-          }),
+        .then(eventId => {
+          price.event = eventId;
+        })
+        .catch(err => {
+          console.log(err);
+        }),
 
         findOneById(EventModel, price.priceBasedOn)
-          .then(eventId => {
-            price.priceBasedOn = eventId;
-          })
-          .catch(err => {
-            console.log(err);
-          })
+        .then(eventId => {
+          price.priceBasedOn = eventId;
+        })
+        .catch(err => {
+          console.log(err);
+        })
       );
     });
 
     connectTeamsAndEventsAndNation.push(
       findOneById(NationModel, object.nationality)
-        .then(nationalityId => {
-          object.nationality = nationalityId;
-        })
-        .catch(err => {
-          console.log(err);
-        })
+      .then(nationalityId => {
+        object.nationality = nationalityId;
+      })
+      .catch(err => {
+        console.log(err);
+      })
     );
 
     connectTeamsAndEventsAndNation.push(
       new Promise((resolve, reject) => {
-        RunnerModel.find({ id: object.id }).exec((err, runner) => {
+        RunnerModel.find({
+          id: object.id
+        }).exec((err, runner) => {
           if (runner.length) {
             const _runner = runner[0];
-            const eventAlreadySaved = _runner.results.find(function(result) {
+            const eventAlreadySaved = _runner.results.find(function (result) {
               return (
                 parseInt(result.class.id) ===
                 parseInt(object.results[0].class.id)
@@ -90,8 +102,14 @@ export default {
     // Wait untill alle the connections are done
     Promise.all(connectTeamsAndEventsAndNation)
       .then(() => {
-        const query = { id: req.body.id };
-        const options = { upsert: true, setDefaultsOnInsert: true, new: true };
+        const query = {
+          id: req.body.id
+        };
+        const options = {
+          upsert: true,
+          setDefaultsOnInsert: true,
+          new: true
+        };
         console.log("All Connected", object.id);
 
         // Make sure to not save the same runner twice
@@ -107,7 +125,7 @@ export default {
       });
   },
   deleteRunners: (req, res, next) => {
-    RunnerModel.deleteMany({}, function(err) {
+    RunnerModel.deleteMany({}, function (err) {
       if (err) return handleError(err);
       next();
     });
@@ -125,7 +143,13 @@ export default {
       });
   },
   getAllByEvent: (req, res, next) => {
-    RunnerModel.find({ results: { $elemMatch: { event: req.params.id } } })
+    RunnerModel.find({
+        results: {
+          $elemMatch: {
+            event: req.params.id
+          }
+        }
+      })
       .populate("nationalit", "short")
       .populate("nationality", "id")
       .populate("results.team", "name")
@@ -138,7 +162,13 @@ export default {
       });
   },
   getAllByPriceForEvent: (req, res, next) => {
-    RunnerModel.find({ price: { $elemMatch: { event: req.params.id } } })
+    RunnerModel.find({
+        price: {
+          $elemMatch: {
+            event: req.params.id
+          }
+        }
+      })
       .populate("nationality")
       .populate("results.team")
       .populate("results.event")
@@ -151,7 +181,9 @@ export default {
       });
   },
   getRunner: (req, res, next) => {
-    RunnerModel.find({ _id: req.params.id })
+    RunnerModel.find({
+        _id: req.params.id
+      })
       .populate("nationality")
       .populate("results.team")
       .populate("results.event")

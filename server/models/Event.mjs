@@ -6,14 +6,15 @@ const EventSchema = new Schema({
   id: Number,
   startDate: Date,
   eventForm: String,
-  classes: [
-    {
-      name: String,
-      id: Number
-    }
-  ]
+  classes: [{
+    name: String,
+    id: Number
+  }]
 });
 
 const EventModel = mongoose.model("Event", EventSchema);
 
-export { EventSchema as default, EventModel };
+export {
+  EventSchema as
+  default, EventModel
+};

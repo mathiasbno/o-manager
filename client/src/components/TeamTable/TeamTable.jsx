@@ -1,6 +1,6 @@
 import React from "react";
 
-import { padArray } from "../../helper/helpers";
+import { padArray } from "../../helper/helpers.mjs";
 import Runner from "../atoms/Runner/Runner";
 import TeamTableHeader from "../atoms/TeamTableHeader/TeamTableHeader";
 
