@@ -16,7 +16,12 @@ class Event extends React.Component {
   }
 
   getPlayerEventClasses(playerEvent) {
-    const { player, onJoinPlayerEvent } = this.props;
+    const {
+      player,
+      onJoinPlayerEvent,
+      onOpenRunnerSelect,
+      onCloseRunnerSelect
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -24,8 +29,10 @@ class Event extends React.Component {
           <Class
             eventClass={eventClass}
             playerEvent={playerEvent}
-            onJoinPlayerEvent={onJoinPlayerEvent}
             player={player}
+            onJoinPlayerEvent={onJoinPlayerEvent}
+            onOpenRunnerSelect={onOpenRunnerSelect}
+            onCloseRunnerSelect={onCloseRunnerSelect}
             key={i}
           />
         ))}
@@ -53,12 +60,14 @@ const mapToProps = ({
   team,
   playerEvents,
   getPlayerEvents,
-  onJoinPlayerEvent
+  onJoinPlayerEvent,
+  onOpenRunnerSelect
 }) => ({
   team,
   playerEvents,
   getPlayerEvents,
-  onJoinPlayerEvent
+  onJoinPlayerEvent,
+  onOpenRunnerSelect
 });
 
 export default connect(

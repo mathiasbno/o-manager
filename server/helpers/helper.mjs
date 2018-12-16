@@ -1,5 +1,6 @@
 import validator from "validator";
 import EventorApi from "../../processing/eventor-api/index";
+
 function getEventor(eventor) {
   let _eventor = null;
 
@@ -35,14 +36,18 @@ function getEventor(eventor) {
   return _eventor;
 }
 
-const findOneById = function(model, id) {
+const findOneById = function (model, id) {
   return new Promise((resolve, reject) => {
     if (typeof id == "object") {
       resolve(id);
     } else {
-      let query = { id: id };
+      let query = {
+        id: id
+      };
       if (validator.isMongoId(id.toString())) {
-        query = { _id: id.toString() };
+        query = {
+          _id: id.toString()
+        };
       }
 
       model.findOne(query).exec((err, _model) => {
@@ -53,4 +58,17 @@ const findOneById = function(model, id) {
   });
 };
 
-export { getEventor, findOneById };
+function standardUpdateOptions(options) {
+  return {
+    upsert: true,
+    setDefaultsOnInsert: true,
+    new: true,
+    ...options
+  }
+}
+
+export {
+  getEventor,
+  findOneById,
+  standardUpdateOptions
+};

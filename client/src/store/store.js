@@ -2,9 +2,13 @@ import createStore from "redux-zero";
 
 const initialState = {
   loading: false,
-  runnerSelectOpen: false,
+  runnerSelect: {
+    classId: null,
+    event: null,
+    open: false,
+    runners: []
+  },
   errorMsg: "",
-  runners: [],
   team: [],
   playerEvents: []
 };

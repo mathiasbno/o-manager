@@ -1,0 +1,48 @@
+.number {
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  margin-right: 33px;
+  padding: 3px 8px;
+  composes: whiteBackground from "../../../assets/styles/variables.module.css";
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  composes: textColor from "../../../assets/styles/variables.module.css";
+}
+
+.club {
+  font-size: 16px;
+  font-weight: normal;
+  composes: textColor from "../../../assets/styles/variables.module.css";
+}
+
+.previousResults {
+  font-size: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  composes: grayColor from "../../../assets/styles/variables.module.css";
+}
+
+.previousResults li {
+  margin-bottom: 5px;
+}
+
+.previousResults li:last-child {
+  margin-bottom: 0;
+}
+
+.noRunner {
+  font-size: 18px;
+  font-weight: normal;
+  font-style: italic;
+  flex-grow: 1;
+  margin: 0;
+  composes: grayColor from "../../../assets/styles/variables.module.css";
+}
+

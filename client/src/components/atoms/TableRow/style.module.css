@@ -1,0 +1,12 @@
+.tableRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 15px;
+  width: 100%;
+}
+
+.tableRow:nth-child(even) {
+  background-color: #f9f9f9;
+}

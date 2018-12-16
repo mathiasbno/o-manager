@@ -17,9 +17,3 @@
   height: 160px;
   overflow: hidden;
 }
-
-.teamTable {
-  display: flex;
-  box-shadow: 0 0 30px 0 rgba(145, 145, 145, 0.25);
-  flex-direction: column;
-}

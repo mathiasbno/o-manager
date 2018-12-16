@@ -1,18 +1,21 @@
 import axios from "axios";
 
 const actions = store => ({
-  getrunners(state, event) {
+  getrunners(state, eventId) {
     store.setState({
       loading: true,
       errorMessage: ""
     });
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/runners/event/${event}`)
+      .get(`${process.env.REACT_APP_API_URL}/runners/event/${eventId}`)
       .then(runners => {
         console.log("runners", runners);
         store.setState({
-          runners: [...runners.data],
+          runnerSelect: {
+            ...state.runnerSelect,
+            runners: [...runners.data]
+          },
           loading: false
         });
       })
@@ -46,7 +49,7 @@ const actions = store => ({
   },
   getPlayer(state, value) {
     // TODO: Fetch logged in player
-    const id = "5c0303ce0fc5241fcd1cb927";
+    const id = process.env.REACT_APP_PLAYER_ID;
 
     store.setState({
       loading: true,
@@ -69,8 +72,6 @@ const actions = store => ({
       });
   },
   onJoinPlayerEvent(state, playerEvent) {
-    console.log(playerEvent);
-
     axios
       .patch(`${process.env.REACT_APP_API_URL}/player/joinEvent`, playerEvent)
       .then(player => {
@@ -86,20 +87,54 @@ const actions = store => ({
         });
       });
   },
-  closeRunnerSelect() {
+  onAddRunnerToTeam(state, runnerId) {
+    console.log(state.runnerSelect);
+
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/player/team/addRunner`, {
+        runnerId: runnerId,
+        eventClass: state.runnerSelect.eventClass
+      })
+      .then(player => {
+        console.log(player.data);
+
+        store.setState({
+          player: player.data,
+          loading: false
+        });
+      })
+      .catch(error => {
+        store.setState({
+          errorMessage: error.message,
+          loading: false
+        });
+      });
+
     store.setState({
-      runnerSelectOpen: false
+      runnerSelect: {
+        ...state.runnerSelect,
+        open: false,
+      }
     });
   },
-  openRunnerSelect(state, value) {
+  closeRunnerSelect(state) {
     store.setState({
-      runnerSelectOpen: true
+      runnerSelect: {
+        ...state.runnerSelect,
+        open: false,
+      }
     });
   },
-  addRunnerToTeam(_store, runner) {
+  onOpenRunnerSelect(state, playerEvent, eventClass) {
+    const runners = eventClass._id === state.runnerSelect.eventClass ? state.runnerSelect.runners : [];
+
     store.setState({
-      team: _store.team.concat(runner),
-      runnerSelectOpen: false
+      runnerSelect: {
+        eventClass: eventClass._id,
+        event: playerEvent,
+        runners: runners,
+        open: true,
+      }
     });
   }
 });

@@ -13,4 +13,6 @@ export default router => {
 
   /* PATCH */
   router.route("/player/joinEvent").patch(playerController.joinPlayerEvent);
+
+  router.route("/player/team/addRunner").patch(playerController.addRunnerToTeam);
 };

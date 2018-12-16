@@ -7,7 +7,12 @@ import TeamTable from "../../TeamTable/TeamTable";
 
 class Card extends React.Component {
   getPlayerTeam(eventClass) {
-    const { player } = this.props;
+    const {
+      player,
+      playerEvent,
+      onOpenRunnerSelect,
+      onCloseRunnerSelect
+    } = this.props;
 
     const team = player.playerEvents.map(_event => {
       return _event.teams.find(_team => {
@@ -18,7 +23,13 @@ class Card extends React.Component {
     return (
       <React.Fragment>
         <TextInput />
-        <TeamTable team={team.runners} />
+        <TeamTable
+          onOpenRunnerSelect={onOpenRunnerSelect}
+          onCloseRunnerSelect={onCloseRunnerSelect}
+          playerEvent={playerEvent}
+          eventClass={eventClass}
+          team={team.runners}
+        />
       </React.Fragment>
     );
   }
@@ -39,14 +50,19 @@ class Card extends React.Component {
           points={eventClass.budget}
           lockTime={new Date(eventClass.lockDate).toString()}
         />
-        {event ? (
+        {typeof event !== "undefined" ? (
           this.getPlayerTeam(eventClass)
         ) : (
           <React.Fragment>
             <Button large center onClick={() => onJoinPlayerEvent(playerEvent)}>
               Join {playerEvent.name}
             </Button>
-            <TeamTable colapsed team={[]} />
+            <TeamTable
+              colapsed
+              playerEvent={playerEvent}
+              eventClass={eventClass}
+              team={[]}
+            />
           </React.Fragment>
         )}
       </React.Fragment>

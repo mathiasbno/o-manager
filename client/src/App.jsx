@@ -4,7 +4,7 @@ import { connect } from "redux-zero/react";
 import actions from "./store/actions/index";
 
 import Event from "./views/Event";
-import RunnerSelect from "./components/RunnerSelect";
+import RunnerSelect from "./components/RunnerSelect/RunnerSelect";
 
 import style from "./index.module.css";
 
@@ -16,14 +16,23 @@ class App extends Component {
   }
 
   render() {
-    const { loading, errorMessage, runnerSelectOpen, player } = this.props;
+    const {
+      loading,
+      errorMessage,
+      runnerSelect,
+      player,
+      onAddRunnerToTeam
+    } = this.props;
 
     return (
       <div className={style.reset}>
         {loading ? <span>Loading…</span> : null}
         {errorMessage ? <span>{errorMessage}</span> : null}
-        {runnerSelectOpen ? (
-          <RunnerSelect event="5be8961a168b5db0cdc39c82" />
+        {runnerSelect.open ? (
+          <RunnerSelect
+            playerEvent={runnerSelect.event}
+            onAddRunnerToTeam={onAddRunnerToTeam}
+          />
         ) : null}
         {player ? <Event player={player} /> : null}
       </div>
@@ -34,13 +43,15 @@ class App extends Component {
 const mapToProps = ({
   loading,
   errorMessage,
-  runnerSelectOpen,
+  runnerSelect,
+  onAddRunnerToTeam,
   player,
   getPlayer
 }) => ({
   loading,
   errorMessage,
-  runnerSelectOpen,
+  runnerSelect,
+  onAddRunnerToTeam,
   player,
   getPlayer
 });

@@ -1,4 +1,8 @@
 import {
+  standardUpdateOptions
+} from "../helpers/helper";
+
+import {
   PlayerModel
 } from "../models/Player.mjs";
 
@@ -14,22 +18,15 @@ export default {
   joinPlayerEvent: (req, res, next) => {
     // TODO: Use logged in athhlete id
     const query = {
-      _id: "5c0303ce0fc5241fcd1cb927" // User
-    };
-    const options = {
-      upsert: true,
-      setDefaultsOnInsert: true,
-      new: true
+      _id: process.env.REACT_APP_PLAYER_ID // User
     };
 
-    const teams = req.body.eventClasses.map((eventClass) => {
+    const teams = req.body.eventClasses.map(eventClass => {
       return {
         playerEventClassId: eventClass._id,
         runners: []
-      }
+      };
     });
-
-    console.log(teams);
 
     PlayerModel.findOneAndUpdate(
       query, {
@@ -41,7 +38,7 @@ export default {
           }
         }
       },
-      options,
+      standardUpdateOptions(),
       function (err, player) {
         if (err) res.send(err);
         else if (!player) res.sendStatus(400);
@@ -49,6 +46,45 @@ export default {
         next();
       }
     );
+  },
+  addRunnerToTeam: (req, res, next) => {
+    console.log("body:", req.body);
+
+    // TODO: Use logged in athhlete id
+    // TODO: Use req.body.eventId for playerEventId
+
+    const query = {
+      $and: [{
+          _id: process.env.REACT_APP_PLAYER_ID
+        },
+        {
+          playerEvents: {
+            $elemMatch: {
+              teams: {
+                $elemMatch: {
+                  playerEventClassId: req.body.eventClass
+                }
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    PlayerModel.findOneAndUpdate(query, {
+        $addToSet: {
+          "playerEvents.0.teams.$.runners": req.body.runnerId
+        }
+      }, {
+        new: true
+      })
+      .populate("playerEvents.teams.runners")
+      .exec((err, player) => {
+        if (err) res.send(err);
+        else if (!player) res.sendStatus(400);
+        else res.send(player);
+        next();
+      });
   },
   deletePlayers: (req, res, next) => {
     PlayerModel.remove({}, function (err) {
@@ -69,7 +105,8 @@ export default {
   getPlayer: (req, res, next) => {
     PlayerModel.find({
         _id: req.params.id
-      }).populate("playerEvents.eventId")
+      })
+      .populate("playerEvents.teams.runners")
       .exec((err, player) => {
         if (err) res.send(err);
         else if (!player.length) res.sendStatus(404);

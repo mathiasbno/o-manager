@@ -157,7 +157,8 @@ export default {
       .exec((err, runners) => {
         if (err) res.send(err);
         else if (!runners) res.sendStatus(400);
-        else res.send(runners);
+        // TODO: dont limit runner count :)
+        else res.send(runners.slice(0, 50));
         next();
       });
   },
