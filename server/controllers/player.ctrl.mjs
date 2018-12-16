@@ -86,6 +86,45 @@ export default {
         next();
       });
   },
+  removeRunnerFromTeam: (req, res, next) => {
+    console.log("body:", req.body);
+
+    // TODO: Use logged in athhlete id
+    // TODO: Use req.body.eventId for playerEventId
+
+    const query = {
+      $and: [{
+          _id: process.env.REACT_APP_PLAYER_ID
+        },
+        {
+          playerEvents: {
+            $elemMatch: {
+              teams: {
+                $elemMatch: {
+                  playerEventClassId: req.body.eventClass
+                }
+              }
+            }
+          }
+        }
+      ]
+    };
+
+    PlayerModel.findOneAndUpdate(query, {
+        $pull: {
+          "playerEvents.0.teams.$.runners": req.body.runnerId
+        }
+      }, {
+        new: true
+      })
+      .populate("playerEvents.teams.runners")
+      .exec((err, player) => {
+        if (err) res.send(err);
+        else if (!player) res.sendStatus(400);
+        else res.send(player);
+        next();
+      });
+  },
   deletePlayers: (req, res, next) => {
     PlayerModel.remove({}, function (err) {
       if (err) return handleError(err);

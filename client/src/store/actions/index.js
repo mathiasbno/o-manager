@@ -88,16 +88,12 @@ const actions = store => ({
       });
   },
   onAddRunnerToTeam(state, runnerId) {
-    console.log(state.runnerSelect);
-
     axios
       .patch(`${process.env.REACT_APP_API_URL}/player/team/addRunner`, {
         runnerId: runnerId,
         eventClass: state.runnerSelect.eventClass
       })
       .then(player => {
-        console.log(player.data);
-
         store.setState({
           player: player.data,
           loading: false
@@ -116,6 +112,27 @@ const actions = store => ({
         open: false,
       }
     });
+  },
+  onRemoveRunnerFromTeam(state, runnerId, eventClass) {
+    console.log('ID', runnerId);
+
+    axios
+      .patch(`${process.env.REACT_APP_API_URL}/player/team/removeRunner`, {
+        runnerId: runnerId,
+        eventClass: eventClass
+      })
+      .then(player => {
+        store.setState({
+          player: player.data,
+          loading: false
+        });
+      })
+      .catch(error => {
+        store.setState({
+          errorMessage: error.message,
+          loading: false
+        });
+      });
   },
   closeRunnerSelect(state) {
     store.setState({

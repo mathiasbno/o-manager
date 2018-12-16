@@ -5,7 +5,6 @@ export default router => {
 
   /* GET */
   router.route("/players").get(playerController.getAll);
-
   router.route("/player/:id").get(playerController.getPlayer);
 
   /* POST */
@@ -13,6 +12,6 @@ export default router => {
 
   /* PATCH */
   router.route("/player/joinEvent").patch(playerController.joinPlayerEvent);
-
   router.route("/player/team/addRunner").patch(playerController.addRunnerToTeam);
+  router.route("/player/team/removeRunner").patch(playerController.removeRunnerFromTeam);
 };

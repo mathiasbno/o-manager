@@ -14,7 +14,7 @@ class TeamTable extends React.Component {
       playerEvent,
       eventClass,
       onOpenRunnerSelect,
-      onCloseRunnerSelect
+      onRemoveRunnerFromTeam
     } = this.props;
 
     const paddedArray = padArray(team, 10, null);
@@ -33,7 +33,7 @@ class TeamTable extends React.Component {
       return (
         <TableRow key={i}>
           <RunnerInTeam
-            onCloseRunnerSelect={onCloseRunnerSelect}
+            onRemoveRunnerFromTeam={onRemoveRunnerFromTeam}
             runner={runner}
             playerEvent={playerEvent}
             eventClass={eventClass}

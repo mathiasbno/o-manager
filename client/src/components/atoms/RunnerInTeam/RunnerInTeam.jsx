@@ -10,7 +10,7 @@ class RunnerInTeam extends React.Component {
       playerEvent,
       eventClass,
       onOpenRunnerSelect,
-      onCloseRunnerSelect
+      onRemoveRunnerFromTeam
     } = this.props;
 
     const eventIsRelay = playerEvent.event.eventForm === "RelaySingleDay";
@@ -29,7 +29,12 @@ class RunnerInTeam extends React.Component {
               <li>2017: 8th leg - Best time</li>
             </ul>
             <div className={style.actions}>
-              <Button onClick={() => onCloseRunnerSelect()} color="red">
+              <Button
+                onClick={() =>
+                  onRemoveRunnerFromTeam(runner._id, eventClass._id)
+                }
+                color="red"
+              >
                 Remove runner
               </Button>
             </div>

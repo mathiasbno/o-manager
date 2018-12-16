@@ -11,7 +11,7 @@ class Card extends React.Component {
       player,
       playerEvent,
       onOpenRunnerSelect,
-      onCloseRunnerSelect
+      onRemoveRunnerFromTeam
     } = this.props;
 
     const team = player.playerEvents.map(_event => {
@@ -25,7 +25,7 @@ class Card extends React.Component {
         <TextInput />
         <TeamTable
           onOpenRunnerSelect={onOpenRunnerSelect}
-          onCloseRunnerSelect={onCloseRunnerSelect}
+          onRemoveRunnerFromTeam={onRemoveRunnerFromTeam}
           playerEvent={playerEvent}
           eventClass={eventClass}
           team={team.runners}
