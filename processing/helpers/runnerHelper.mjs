@@ -1,7 +1,9 @@
 function isJuniorOrOlder(runnerBirthDate, eventStartDate) {
-  console.log(runnerBirthDate, eventStartDate.slice(0, 4));
-
-  return eventStartDate.slice(0, 4) - runnerBirthDate >= 17;
+  if (!runnerBirthDate) {
+    return false;
+  } else {
+    return eventStartDate.slice(0, 4) - runnerBirthDate >= 17;
+  }
 }
 
 function runnerObject(runner) {

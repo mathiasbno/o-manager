@@ -74,8 +74,6 @@ $(document).ready(function () {
     const eventId = $('#eventId').val();
     const dryrun = $('#dryrun').is(":checked");
 
-    console.log(dryrun);
-
     processEvent(eventor, eventId, dryrun).then(function (data) {
       $('#eventData').text(JSON.stringify(data, null, 4));
     });
