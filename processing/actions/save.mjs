@@ -1,8 +1,18 @@
-import { saveData, saveConnectedData } from "../database/index";
-import { processRelayEvent, processEvent } from "./process";
-import { asyncForEach } from "../helpers/helper";
+import {
+  saveData,
+  saveConnectedData
+} from "../database/index";
+import {
+  processRelayEvent,
+  processEvent
+} from "./process";
+import {
+  asyncForEach,
+  convertToBool
+} from "../helpers/helper";
 
 function processAndSaveEvent(eventor, eventId, dryrun = false) {
+  const _dryrun = convertToBool(dryrun);
   console.log("Starting process");
   return new Promise((resolve, reject) => {
     console.log("Fetching from Eventor");
@@ -23,8 +33,10 @@ function processAndSaveEvent(eventor, eventId, dryrun = false) {
       const teams = processedEvent.teams;
       const runners = processedEvent.runners;
 
-      if (!dryrun) {
-        Promise.all(saveConnectedData(event, nations, teams)).then(function() {
+      console.log("Dryrun:", _dryrun, !_dryrun, convertToBool(_dryrun));
+
+      if (!_dryrun) {
+        Promise.all(saveConnectedData(event, nations, teams)).then(function () {
           resolve(
             asyncForEach(runners, async runner => {
               await saveData(`${process.env.API_URL}/runner`, runner)
@@ -38,7 +50,12 @@ function processAndSaveEvent(eventor, eventId, dryrun = false) {
           );
         });
       } else {
-        resolve({ event, nations, teams, runners });
+        resolve({
+          event,
+          nations,
+          teams,
+          runners
+        });
         console.log(event);
         console.log(nations.length, nations);
         console.log(teams.length, teams);
@@ -48,4 +65,6 @@ function processAndSaveEvent(eventor, eventId, dryrun = false) {
   });
 }
 
-export { processAndSaveEvent };
+export {
+  processAndSaveEvent
+};

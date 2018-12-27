@@ -4,3 +4,7 @@ export EVENTOR_IOF_APIKEY=xxxx
 export FIREBASE_API_KEY=xxxx
 
 export API_URL=http://localhost:5000/api
+export BASIC_AUTH_USER=xxxx
+export BASIC_AUTH_PASSWORD=xxxx
+export REACT_APP_API_URL=$API_URL
+export REACT_APP_PLAYER_ID=xxxx

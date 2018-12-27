@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+  <html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Process event</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./process.js" type="text/javascript"></script>
+
+    <style type="text/css">
+      pre {
+        background-color: lightgray;
+        padding: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Process event</h1>
+
+    <form id="processForm">
+      <p>
+        <label for="eventor">Eventor</label>
+        <select id="eventor">
+          <option disabled selected value="">Select Eventor</option>
+          <option value="NO">Eventor NO</option>
+          <option value="SE">Eventor SE</option>
+          <option value="IOF">Eventor IOF</option>
+        </select>
+      </p>
+      <p>
+        <label for="eventId">Event id</label>
+        <input type="text" placeholder="Event id" id="eventId" />
+      </p>
+
+      <p>
+        <input type="button" disabled value="Preview" id="previewButton" />
+        <input type="button" value="Reset" id="reset" />
+      </p>
+
+      <pre id="preview">Preview…</pre>
+
+      <input type="checkbox" name="dryrun" value="dryrun" id="dryrun">Dryrun </br>
+
+      <p>
+        <input type="button" disabled value="Process event" id="processButton" />
+      </p>
+
+      <pre id="eventData">Event data</pre>
+    </form>
+  </body>
+
+</html>

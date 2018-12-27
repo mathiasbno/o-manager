@@ -17,7 +17,7 @@ async function asyncForEach(array, callback) {
 }
 
 function findResultById(results, id) {
-  return results.filter(function(result) {
+  return results.filter(function (result) {
     return result.event.id === id;
   });
 }
@@ -36,6 +36,10 @@ function isVacantRunner(runner) {
   return runner.id === 0;
 }
 
+function convertToBool(bool) {
+  return bool == 'true';
+}
+
 export {
   asyncForEach,
   itemInArray,
@@ -43,5 +47,6 @@ export {
   filterRunnersByEventId,
   findResultById,
   getRandomInt,
-  isVacantRunner
+  isVacantRunner,
+  convertToBool
 };

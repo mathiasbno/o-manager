@@ -1,4 +1,6 @@
-import { get } from "./helpers/helper";
+import {
+  get
+} from "./helpers/helper";
 
 class EventorApi {
   constructor(config) {
@@ -7,7 +9,12 @@ class EventorApi {
   }
 
   options(endpoint) {
-    return { uri: `${this.url}${endpoint}`, headers: { ApiKey: this.apiKey } };
+    return {
+      uri: `${this.url}${endpoint}`,
+      headers: {
+        ApiKey: this.apiKey
+      }
+    };
   }
 
   apiKeyHolder() {
@@ -23,11 +30,26 @@ class EventorApi {
     });
   }
 
+  event(eventId) {
+    return new Promise((resolve, reject) => {
+      const endpoint = `/event/${eventId}`;
+      get(this.options(endpoint))
+        .then(response => {
+          resolve(response);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   resultsEvent(eventId) {
     return new Promise((resolve, reject) => {
       const endpoint = "/results/event";
       const customOptions = {
-        qs: { eventId: eventId }
+        qs: {
+          eventId: eventId
+        }
       };
       const options = Object.assign(this.options(endpoint), customOptions);
 
@@ -45,7 +67,9 @@ class EventorApi {
     return new Promise((resolve, reject) => {
       const endpoint = "/entries";
       const customOptions = {
-        qs: { eventIds: eventId }
+        qs: {
+          eventIds: eventId
+        }
       };
       const options = Object.assign(this.options(endpoint), customOptions);
 
@@ -63,7 +87,9 @@ class EventorApi {
     return new Promise((resolve, reject) => {
       const endpoint = "/starts/event";
       const customOptions = {
-        qs: { eventId: eventId }
+        qs: {
+          eventId: eventId
+        }
       };
       const options = Object.assign(this.options(endpoint), customOptions);
 

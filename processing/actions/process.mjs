@@ -1,11 +1,22 @@
 import runnerObject from "../helpers/runnerHelper";
-import { nationObject, unknownNation } from "../helpers/nationHelper";
+import {
+  nationObject,
+  unknownNation
+} from "../helpers/nationHelper";
 import {
   relayResultObject,
   individualResultObject
 } from "../helpers/resultHelper";
-import { eventObject, teamObject, unknownTeam } from "../helpers/eventHelper";
-import { itemInArray, ensureArray, isVacantRunner } from "../helpers/helper";
+import {
+  eventObject,
+  teamObject,
+  unknownTeam
+} from "../helpers/eventHelper";
+import {
+  itemInArray,
+  ensureArray,
+  isVacantRunner
+} from "../helpers/helper";
 
 function processEvent(data) {
   const event = eventObject(data.Event, data.ClassResult);
@@ -58,7 +69,12 @@ function processEvent(data) {
     });
   }
 
-  return { event, teams, nations, runners };
+  return {
+    event,
+    teams,
+    nations,
+    runners
+  };
 }
 
 function processRelayEvent(data) {
@@ -104,7 +120,15 @@ function processRelayEvent(data) {
     });
   }
 
-  return { event, teams, nations, runners };
+  return {
+    event,
+    teams,
+    nations,
+    runners
+  };
 }
 
-export { processRelayEvent, processEvent };
+export {
+  processRelayEvent,
+  processEvent
+};

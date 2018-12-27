@@ -16,11 +16,21 @@ function eventObject(event, classes) {
 }
 
 function teamObject(team) {
-  return { name: team.Name, id: parseInt(team.OrganisationId) };
+  return {
+    name: team.Name,
+    id: parseInt(team.OrganisationId)
+  };
 }
 
 function unknownTeam() {
-  return { name: "Unknown", id: 0 };
+  return {
+    name: "Unknown",
+    id: 0
+  };
 }
 
-export { eventObject, teamObject, unknownTeam };
+export {
+  eventObject,
+  teamObject,
+  unknownTeam
+};
