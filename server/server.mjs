@@ -11,8 +11,8 @@ import routes from "./routes/index.mjs";
 function check(name, pass) {
   var valid = true
 
-  valid = compare(name, 'john') && valid
-  valid = compare(pass, 'secret') && valid
+  valid = compare(name, process.env.BASIC_AUTH_USER) && valid
+  valid = compare(pass, process.env.BASIC_AUTH_PASSWORD) && valid
 
   return valid
 }
