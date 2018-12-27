@@ -1,4 +1,7 @@
-import runnerObject from "../helpers/runnerHelper";
+import {
+  runnerObject,
+  isJuniorOrOlder
+} from "../helpers/runnerHelper";
 import {
   nationObject,
   unknownNation
@@ -62,7 +65,7 @@ function processEvent(data) {
           individualResultObject(result, event.id, team.id, __class)
         );
 
-        if (itemInArray(runners, _runner.id) && !isVacantRunner(_runner)) {
+        if (itemInArray(runners, _runner.id) && !isVacantRunner(_runner) && isJuniorOrOlder(_runner.birthYear, event.startDate)) {
           runners.push(_runner);
         }
       });
@@ -112,7 +115,7 @@ function processRelayEvent(data) {
           const result = relayResultObject(runner, event.id, _team.id, __class);
           _runner.results.push(result);
 
-          if (!isVacantRunner(_runner)) {
+          if (!isVacantRunner(_runner) && isJuniorOrOlder(_runner.birthYear, event.startDate)) {
             runners.push(_runner);
           }
         });

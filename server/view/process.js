@@ -62,6 +62,7 @@ $(document).ready(function () {
 
   $('#reset').on('click', function () {
     $('#preview').text('Preview…');
+    $('#eventData').text('Event data…');
     $('#previewButton').attr('disabled', 'disabled');
     $('#processButton').attr('disabled', 'disabled');
     $('#eventor').val('').removeAttr('disabled');

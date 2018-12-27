@@ -1,13 +1,19 @@
+function isJuniorOrOlder(runnerBirthDate, eventStartDate) {
+  console.log(runnerBirthDate, eventStartDate.slice(0, 4));
+
+  return eventStartDate.slice(0, 4) - runnerBirthDate >= 17;
+}
+
 function runnerObject(runner) {
   // Not all runners have a registered nationality, set country Id or null
-  const nationalityId = runner.Person.Nationality
-    ? runner.Person.Nationality.Country.CountryId.value
-    : null;
+  const nationalityId = runner.Person.Nationality ?
+    runner.Person.Nationality.Country.CountryId.value :
+    null;
 
   // Not all runners have a registered birtDate, set BirthDate or null
-  const birthDate = runner.Person.BirthDate
-    ? runner.Person.BirthDate.Date.slice(0, 4)
-    : null;
+  const birthDate = runner.Person.BirthDate ?
+    runner.Person.BirthDate.Date.slice(0, 4) :
+    null;
 
   // Not all runners have a registered gender
   const gender = runner.Person.sex ? runner.Person.sex : "Unknown";
@@ -28,4 +34,7 @@ function runnerObject(runner) {
   return runnerObject;
 }
 
-export default runnerObject;
+export {
+  runnerObject,
+  isJuniorOrOlder
+};
