@@ -13,42 +13,142 @@
         background-color: lightgray;
         padding: 20px;
       }
+
+      .formWrapper {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      hr {
+        width: 100%;
+      }
+
+      form {
+        margin: 1em;
+        width: calc(50% - 2em);
+      }
     </style>
   </head>
 
   <body>
-    <h1>Process event</h1>
+    <div class="formWrapper">
+      <form id="processForm">
+        <h1>Process event</h1>
 
-    <form id="processForm">
-      <p>
-        <label for="eventor">Eventor</label>
-        <select id="eventor">
-          <option disabled selected value="">Select Eventor</option>
-          <option value="NO">Eventor NO</option>
-          <option value="SE">Eventor SE</option>
-          <option value="IOF">Eventor IOF</option>
-        </select>
-      </p>
-      <p>
-        <label for="eventId">Event id</label>
-        <input type="text" placeholder="Event id" id="eventId" />
-      </p>
+        <p>
+          <label for="eventId">Event id</label>
+          <input type="text" placeholder="Event id" id="eventId" />
+        </p>
 
-      <p>
-        <input type="button" disabled value="Preview" id="previewButton" />
-        <input type="button" value="Reset" id="reset" />
-      </p>
+        <p>
+          <label for="eventor">Eventor</label>
+          <select id="eventor">
+            <option disabled selected value="">Select Eventor</option>
+            <option value="NO">Eventor NO</option>
+            <option value="SE">Eventor SE</option>
+            <option value="IOF">Eventor IOF</option>
+          </select>
+        </p>
 
-      <pre id="preview">Preview…</pre>
+        <p>
+          <input type="button" disabled value="Preview" id="previewButton" />
+          <input type="button" value="Reset" id="reset" />
+        </p>
 
-      <input type="checkbox" name="dryrun" value="dryrun" id="dryrun">Dryrun </br>
+        <pre id="preview">Preview…</pre>
 
-      <p>
-        <input type="button" disabled value="Process event" id="processButton" />
-      </p>
+        <input type="hidden" value="" id="eventStatus" />
 
-      <pre id="eventData">Event data…</pre>
-    </form>
+        <input type="checkbox" checked="checked" name="dryrun" value="dryrun" id="dryrun">Dryrun </br>
+
+        <p>
+          <input type="button" disabled value="Process event" id="processButton" />
+        </p>
+
+        <pre id="eventMetadata">Event metadata…</pre>
+
+        <pre id="eventData">Event data…</pre>
+      </form>
+
+      <form id="processForm">
+        <h1>New player event</h1>
+
+        <p>
+          <label for="oldRace">Price based on</label>
+          <select id="oldRace">
+            <option disabled selected value="">Select event</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="newRace">Results based on</label>
+          <select id="newRace">
+            <option disabled selected value="">Select event</option>
+          </select>
+        </p>
+
+        <fieldset>
+          <legend>Player event class</legend>
+
+          <p>
+            <label for="eventId">Class name</label>
+            <input type="text" placeholder="Class name" id="className" />
+          </p>
+
+          <p>
+            <label for="eventId">Runners in Team</label>
+            <input type="number" placeholder="Runners in team" id="runnersInTeam" />
+          </p>
+
+          <p>
+            <label for="eventId">Budget</label>
+            <input type="number" placeholder="Budget" id="budget" />
+          </p>
+
+          <p>
+            <label for="playerEventClassGender">Gender</label>
+            <select id="playerEventClassGender">
+              <option disabled selected value="">Select a gender</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <option value="B">Both</option>
+            </select>
+          </p>
+
+          <p>
+            <label for="startDate">Start date</label>
+            <input type="date" id="startDate" name="startDate">
+          </p>
+
+          <p>
+            <label for="lockDate">Lock date</label>
+            <input type="date" id="lockDate" name="lockDate">
+          </p>
+
+          <input type="button" value="Add class" id="addPlayerEventClass" />
+
+        </fieldset>
+
+        <pre id="playerEventClasses">Classes…</pre>
+
+        <p>
+          <input type="button" value="Preview player event" id="previewPlayerEventButton" />
+          <input type="button" disabled value="Save player event" id="createPlayerEventButton" />
+        </p>
+
+        <pre id="previewPlayerEvent">Preview…</pre>
+
+      </form>
+      <hr>
+      <form id="deleteContent">
+        <input type="button" value="Delete all Nations" class="deleteButton" data-model="nations" />
+        <input type="button" value="Delete all Teams" class="deleteButton" data-model="teams" />
+        <input type="button" value="Delete all Events" class="deleteButton" data-model="events" />
+        <input type="button" value="Delete all Runners" class="deleteButton" data-model="runners" />
+
+        <pre id="deleteOutput">Delete output…</pre>
+      </form>
+    </div>
   </body>
 
 </html>
