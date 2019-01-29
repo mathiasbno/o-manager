@@ -41,6 +41,20 @@ const RunnerSchema = new Schema({
       bonusPoints: Number
     }
   }],
+  entries: [{
+    class: {
+      id: Number,
+        name: String
+    },
+    team: {
+      type: Schema.Types.ObjectId,
+      ref: "Team"
+    },
+    event: {
+      type: Schema.Types.ObjectId,
+      ref: "Event"
+    }
+  }],
   price: [{
     event: {
       type: mongoose.Types.ObjectId,

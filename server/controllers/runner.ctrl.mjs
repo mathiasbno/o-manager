@@ -43,6 +43,26 @@ export default {
       );
     });
 
+    object.entries.forEach(entry => {
+      connectTeamsAndEventsAndNation.push(
+        findOneById(TeamModel, entry.team)
+        .then(teamId => {
+          entry.team = teamId;
+        })
+        .catch(err => {
+          console.log(err);
+        }),
+
+        findOneById(EventModel, entry.event)
+        .then(eventId => {
+          entry.event = eventId;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      );
+    });
+
     object.price.forEach(price => {
       connectTeamsAndEventsAndNation.push(
         findOneById(EventModel, price.event)
@@ -125,8 +145,9 @@ export default {
       });
   },
   deleteRunners: (req, res, next) => {
-    RunnerModel.deleteMany({}, function (err) {
+    RunnerModel.deleteMany({}, function (err, runner) {
       if (err) return handleError(err);
+      else res.send(runner);
       next();
     });
   },

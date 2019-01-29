@@ -21,8 +21,9 @@ export default {
     });
   },
   deleteEvents: (req, res, next) => {
-    EventModel.remove({}, function (err) {
+    EventModel.remove({}, function (err, event) {
       if (err) return handleError(err);
+      else res.send(event);
       next();
     });
   },

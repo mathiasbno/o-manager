@@ -24,8 +24,9 @@ export default {
     });
   },
   deleteNation: (req, res, next) => {
-    NationModel.remove({}, function (err) {
+    NationModel.remove({}, function (err, nation) {
       if (err) return handleError(err);
+      else res.send(nation);
       next();
     });
   },
