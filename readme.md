@@ -73,14 +73,14 @@ Open `processing/index.js` and add the following lines. Make sure that the env v
 
 ```
 const EventorApi = require("./eventor-api/index.js");
-const { processAndSaveEvent} = require("./actions/save.js");
+const { processAndSaveResults} = require("./actions/save.js");
 
 const EventorNO = new EventorApi({
   apiKey: process.env.EVENTOR_NO_APIKEY,
   url: "https://eventor.orientering.no/api/"
 });
 
-processAndSaveEvent(EventorNO, 8998, true);
+processAndSaveResults(EventorNO, 8998, true);
 ```
 
 Note that the last parameter indicates that this should run as a dryrun at first, not storing anything but logging the result in the terminal.
@@ -92,7 +92,7 @@ Using `mongoui` you can now see the data in your database.
 Now that we have the runners we need to calculate a price for an upcomming event. We'll import this as well using the same import statement we did abowe.
 
 ```
-processAndSaveEvent(EventorNO, 1234, true);
+processAndSaveResults(EventorNO, 1234, true);
 ```
 
 This event is probably long in the feature, but now we at least have an event object that we can connect and calculate prices on.
