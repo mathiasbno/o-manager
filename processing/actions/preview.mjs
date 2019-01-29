@@ -8,7 +8,8 @@ function previewEvent(eventor, eventId) {
           id: data.Event.EventId,
           name: data.Event.Name,
           eventForm: data.Event.eventForm,
-          data: data.Event.StartDate,
+          date: data.Event.StartDate,
+          eventStatus: data.Event.EventStatusId,
           organiser: {
             id: data.Event.Organiser.Organisation.OrganisationId,
             club: data.Event.Organiser.Organisation.Name

@@ -8,9 +8,12 @@ function isJuniorOrOlder(runnerBirthDate, eventStartDate) {
 
 function runnerObject(runner) {
   // Not all runners have a registered nationality, set country Id or null
-  const nationalityId = runner.Person.Nationality ?
-    runner.Person.Nationality.Country.CountryId.value :
-    null;
+  let nationalityId = 0;
+  if (runner.Person.Nationality) {
+    nationalityId = runner.Person.Nationality.Country ?
+      runner.Person.Nationality.Country.CountryId.value :
+      runner.Person.Nationality.CountryId.value;
+  }
 
   // Not all runners have a registered birtDate, set BirthDate or null
   const birthDate = runner.Person.BirthDate ?
@@ -30,6 +33,7 @@ function runnerObject(runner) {
     birthYear: birthDate,
     nationality: parseInt(nationalityId || 0),
     results: [],
+    entries: [],
     price: []
   };
 

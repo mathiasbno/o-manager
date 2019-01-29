@@ -68,7 +68,10 @@ class EventorApi {
       const endpoint = "/entries";
       const customOptions = {
         qs: {
-          eventIds: eventId
+          eventIds: eventId,
+          includePersonElement: true,
+          includeOrganisationElement: true,
+          includeEventElement: true
         }
       };
       const options = Object.assign(this.options(endpoint), customOptions);
@@ -76,6 +79,26 @@ class EventorApi {
       get(options)
         .then(response => {
           resolve(response.EntryList);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+  eventClasses(eventId) {
+    return new Promise((resolve, reject) => {
+      const endpoint = "/eventclasses";
+      const customOptions = {
+        qs: {
+          eventId: eventId
+        }
+      };
+      const options = Object.assign(this.options(endpoint), customOptions);
+
+      get(options)
+        .then(response => {
+          resolve(response);
         })
         .catch(err => {
           reject(err);

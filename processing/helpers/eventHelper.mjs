@@ -1,8 +1,8 @@
 function eventObject(event, classes) {
   const _classes = classes.map(_class => {
     return {
-      name: _class.EventClass.Name,
-      id: parseInt(_class.EventClass.EventClassId)
+      name: _class.EventClass ? _class.EventClass.Name : _class.Name,
+      id: parseInt(_class.EventClass ? _class.EventClass.EventClassId : _class.EventClassId)
     };
   });
 
@@ -16,8 +16,10 @@ function eventObject(event, classes) {
 }
 
 function teamObject(team) {
+  const name = team.Name ? team.Name : team.TeamName;
+
   return {
-    name: team.Name,
+    name: name,
     id: parseInt(team.OrganisationId)
   };
 }
