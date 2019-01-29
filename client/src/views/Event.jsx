@@ -3,6 +3,7 @@ import { connect } from "redux-zero/react";
 
 import actions from "../store/actions/index";
 
+import NoEvents from "../components/atoms/NoEvents/NoEvents";
 import Card from "../components/atoms/Card/Card";
 import PageWrapper from "../components/atoms/PageWrapper/PageWrapper";
 import Title from "../components/atoms/Title/Title";
@@ -45,12 +46,12 @@ class Event extends React.Component {
 
     return (
       <PageWrapper>
-        {playerEvents.map((playerEvent, i) => (
+        {playerEvents.length ? playerEvents.map((playerEvent, i) => (
           <Card key={`${i}-playerEvent`}>
-            <Title title={playerEvent.event.name} />
+            <Title title={'hello'} />
             {this.getPlayerEventClasses(playerEvent)}
           </Card>
-        ))}
+        )) : <NoEvents />}
       </PageWrapper>
     );
   }

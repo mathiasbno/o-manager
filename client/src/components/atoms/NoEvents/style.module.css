@@ -1,0 +1,8 @@
+.noEvents {
+  border-radius: 10px;
+  box-shadow: 0 0 30px 0 rgba(145, 145, 145, 0.25);
+  background-color: #ffffff;
+  text-align: center;
+  padding: 40px;
+  margin: 40px 0;
+}
